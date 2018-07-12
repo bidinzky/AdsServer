@@ -1,0 +1,2291 @@
+[
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 4486.0,
+    "Name": {
+      "#text": "DEFAULT_LOGIC.i",
+      "@TaskPrio": 1.0
+    },
+    "Type": "INT"
+  },
+  {
+    "BitSize": 63488.0,
+    "IGroup": 16448.0,
+    "IOffset": 4488.0,
+    "Name": {
+      "#text": "DEFAULT_LOGIC.fbStandardLogic",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ARRAY [1..64] OF FB_STANDARD_LOGIC",
+      "@Decoration": "2001FE74"
+    }
+  },
+  {
+    "BitSize": 92928.0,
+    "IGroup": 16448.0,
+    "IOffset": 16384.0,
+    "Name": {
+      "#text": "DEFAULT_LOGIC.fbComplexLogic",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ARRAY [1..16] OF FB_COMPLEX_LOGIC",
+      "@Decoration": "200179CD"
+    }
+  },
+  {
+    "BitSize": 86016.0,
+    "IGroup": 16448.0,
+    "IOffset": 16384.0,
+    "Name": {
+      "#text": "DEFAULT_LOGIC.fbBuildingLogic",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ARRAY [1..16] OF FB_BUILDING_LOGIC",
+      "@Decoration": 20018882.0
+    }
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 12424.0,
+    "Name": {
+      "#text": "DEFAULT_LOGIC.iPI_Ctrl",
+      "@TaskPrio": 1.0
+    },
+    "Type": "INT"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 12800.0,
+    "Name": {
+      "#text": "MAIN.byStep",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 208.0,
+    "IGroup": 16448.0,
+    "IOffset": 12802.0,
+    "Name": {
+      "#text": "MAIN.fbPersistent_Data",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "Persistent_Data",
+      "@Decoration": "100C3C80"
+    }
+  },
+  {
+    "BitSize": 32.0,
+    "Comment": "\r\n                RTC Sync\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 12828.0,
+    "Name": {
+      "#text": "MAIN.fbFtPersistentDataMaster",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "F_TRIG",
+      "@Decoration": "1003051C"
+    }
+  },
+  {
+    "BitSize": 320.0,
+    "IGroup": 16448.0,
+    "IOffset": 12832.0,
+    "Name": {
+      "#text": "MAIN.fbRTC_EX",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "RTC_EX",
+      "@Decoration": "100B36DE"
+    }
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 12872.0,
+    "Name": {
+      "#text": "MAIN.dtLastReceivedDateTime",
+      "@TaskPrio": 1.0
+    },
+    "Type": "DT"
+  },
+  {
+    "BitSize": 32.0,
+    "Comment": "\r\n                BK - Function\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 12876.0,
+    "Name": {
+      "#text": "MAIN.dtResyncDateTime",
+      "@TaskPrio": 1.0
+    },
+    "Type": "DT"
+  },
+  {
+    "BitSize": 144.0,
+    "IGroup": 16448.0,
+    "IOffset": 12880.0,
+    "Name": {
+      "#text": "MAIN.fbWatchdog",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "TON",
+      "@Decoration": "10060D24"
+    }
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 12898.0,
+    "Name": {
+      "#text": "MAIN.udiRequestCounterM",
+      "@TaskPrio": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 1104.0,
+    "IGroup": 16448.0,
+    "IOffset": 12902.0,
+    "Name": {
+      "#text": "MAIN.fbADSWRITE",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ADSWRITE",
+      "@Decoration": "100C6F98"
+    }
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 12801.0,
+    "Name": {
+      "#text": "MAIN.bSendNewInputData",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BOOL"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 13040.0,
+    "Name": {
+      "#text": "MAIN.i",
+      "@TaskPrio": 1.0
+    },
+    "Type": "INT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 13042.0,
+    "Name": {
+      "#text": "MAIN.udiLastChangeInputByte",
+      "@TaskPrio": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 144.0,
+    "Comment": "\r\n                Mapping\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 13046.0,
+    "Name": {
+      "#text": "MAIN.fbDelayBetweenAdsTelegrams",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "TOF",
+      "@Decoration": "10060D24"
+    }
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 13064.0,
+    "Name": {
+      "#text": "MAIN.wStateMapping",
+      "@TaskPrio": 1.0
+    },
+    "Type": "WORD"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 13066.0,
+    "Name": {
+      "#text": "MAIN.fbRtrigRemap",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "R_TRIG",
+      "@Decoration": "1003051C"
+    }
+  },
+  {
+    "BitSize": 1136.0,
+    "IGroup": 16448.0,
+    "IOffset": 13070.0,
+    "Name": {
+      "#text": "MAIN.fbAdsRead",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ADSREAD",
+      "@Decoration": "100C70D3"
+    }
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 13212.0,
+    "Name": {
+      "#text": "MAIN.byActAnalogChannel",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 13213.0,
+    "Name": {
+      "#text": "MAIN.byActDigitalChannel",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 13214.0,
+    "Name": {
+      "#text": "MAIN.byActComTerminal",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 13216.0,
+    "Name": {
+      "#text": "MAIN.wActInputBitOffset",
+      "@TaskPrio": 1.0
+    },
+    "Type": "WORD"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 13218.0,
+    "Name": {
+      "#text": "MAIN.wActOutputBitOffset",
+      "@TaskPrio": 1.0
+    },
+    "Type": "WORD"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 13215.0,
+    "Name": {
+      "#text": "MAIN.bTerminalTypeFound",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BOOL"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 13220.0,
+    "Name": {
+      "#text": "MAIN.j",
+      "@TaskPrio": 1.0
+    },
+    "Type": "INT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 13222.0,
+    "Name": {
+      "#text": "MAIN.k",
+      "@TaskPrio": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 13226.0,
+    "Name": {
+      "#text": "MAIN.stAnalogValue",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ST_ANALOG_DATA",
+      "@Decoration": "10030B23"
+    }
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 13230.0,
+    "Name": {
+      "#text": "MAIN.byStepChangeCouplerConfig",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 16000.0,
+    "IGroup": 16448.0,
+    "IOffset": 13232.0,
+    "Name": {
+      "#text": "MAIN.Buffer",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ARRAY [0..499, 0..1] OF WORD",
+      "@Decoration": 20020341.0
+    }
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 15232.0,
+    "Name": {
+      "#text": "MAIN.iBuffer",
+      "@TaskPrio": 1.0
+    },
+    "Type": "INT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 15234.0,
+    "Name": {
+      "#text": "MAIN.iBufferM",
+      "@TaskPrio": 1.0
+    },
+    "Type": "INT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 15236.0,
+    "Name": {
+      "#text": "MAIN.wInputNo",
+      "@TaskPrio": 1.0
+    },
+    "Type": "WORD"
+  },
+  {
+    "BitSize": 144.0,
+    "Comment": "\r\n                Register Com\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 15238.0,
+    "Name": {
+      "#text": "MAIN.fbTonUpdateAnalogInputs",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "TON",
+      "@Decoration": "10060D24"
+    }
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                DMX\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 15256.0,
+    "Name": {
+      "#text": "MAIN.iActRegComChannel",
+      "@TaskPrio": 1.0
+    },
+    "Type": "INT"
+  },
+  {
+    "BitSize": 848.0,
+    "IGroup": 16448.0,
+    "IOffset": 15258.0,
+    "Name": {
+      "#text": "MAIN.fbDmx",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "FB_DMX",
+      "@Decoration": "100DC55A"
+    }
+  },
+  {
+    "BitSize": 432.0,
+    "IGroup": 16448.0,
+    "IOffset": 15364.0,
+    "Name": {
+      "#text": "MAIN.fbReadWriteTerminalReg",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ReadWriteTerminalReg",
+      "@Decoration": "101389C7"
+    }
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 13231.0,
+    "Name": {
+      "#text": "MAIN.byActReg",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 15418.0,
+    "Name": {
+      "#text": "MAIN.byActMeasurementChannel",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 3856.0,
+    "IGroup": 16448.0,
+    "IOffset": 15420.0,
+    "Name": {
+      "#text": "MAIN.fbRead_Diagnose",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "Read_Diagnose",
+      "@Decoration": "1011C847"
+    }
+  },
+  {
+    "BitSize": 2048.0,
+    "IGroup": 16448.0,
+    "IOffset": 15902.0,
+    "Name": {
+      "#text": "MAIN.sError",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "STRING(255)",
+      "@Decoration": 40000100.0
+    }
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 16158.0,
+    "Name": {
+      "#text": "MAIN.fbFtrigAdsWriteBusy",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "F_TRIG",
+      "@Decoration": "1003051C"
+    }
+  },
+  {
+    "BitSize": 1104.0,
+    "IGroup": 16448.0,
+    "IOffset": 16162.0,
+    "Name": {
+      "#text": "MAIN.fbAdsWriteCyclic",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ADSWRITE",
+      "@Decoration": "100C6F98"
+    }
+  },
+  {
+    "BitSize": 144.0,
+    "IGroup": 16448.0,
+    "IOffset": 16300.0,
+    "Name": {
+      "#text": "MAIN.fbSendDefaultFrame",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "TON",
+      "@Decoration": "10060D24"
+    }
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 15419.0,
+    "Name": {
+      "#text": "MAIN.bError",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BOOL"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16416.0,
+    "IOffset": 0.0,
+    "Name": {
+      "#text": "MAIN.MB0",
+      "@Static": "MArea",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 16318.0,
+    "Name": {
+      "#text": "MAIN.bNewDigitalInput",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BOOL"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 16319.0,
+    "Name": {
+      "#text": "MAIN.bInputTempM",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BOOL"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 16320.0,
+    "Name": {
+      "#text": "MAIN.bInputTemp",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BOOL"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 16321.0,
+    "Name": "MAIN.Data",
+    "Type": {
+      "#text": "ARRAY [0..3] OF BYTE",
+      "@Decoration": 20010148.0
+    }
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 16326.0,
+    "Name": "MAIN.dwData",
+    "Type": "DWORD"
+  },
+  {
+    "BitSize": 544.0,
+    "IGroup": 16448.0,
+    "IOffset": 28000.0,
+    "Name": {
+      "#text": "MAIN.SYSTEM_ID",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "FB_SYSTEM_ID",
+      "@Decoration": "100D5648"
+    }
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 16330.0,
+    "Name": {
+      "#text": "MAIN.fbRTrigWatchdog",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "R_TRIG",
+      "@Decoration": "1003051C"
+    }
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 16334.0,
+    "Name": "MAIN.diStartByteCompareSendData",
+    "Type": "DINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 16338.0,
+    "Name": {
+      "#text": "MAIN.udiTerminalSum",
+      "@TaskPrio": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 16325.0,
+    "Name": {
+      "#text": "MAIN.bRunBcLogicWatchdogM",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BOOL"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 16342.0,
+    "Name": {
+      "#text": "MAIN.udiAdsErrorCounter",
+      "@TaskPrio": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 16346.0,
+    "Name": "MAIN.nOffsetProzessOutput",
+    "Type": "WORD"
+  },
+  {
+    "BitSize": 1440.0,
+    "IGroup": 16448.0,
+    "IOffset": 28068.0,
+    "Name": {
+      "#text": "MAIN.stTerminalDescription",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ARRAY [0..14] OF ST_TERMINAL_DESCRIPTION",
+      "@Decoration": "200130A7"
+    }
+  },
+  {
+    "BitSize": 928.0,
+    "IGroup": 16448.0,
+    "IOffset": 28248.0,
+    "Name": {
+      "#text": "MAIN.fbGetNetworkConfig",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "FB_GetNetworkConfig",
+      "@Decoration": "100DB738"
+    }
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 16.0,
+    "Name": {
+      "#text": ".uiMaxNoOfAnalogChannels",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 18.0,
+    "Name": {
+      "#text": ".uiMaxNoOfDigitalChannels",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 20.0,
+    "Name": {
+      "#text": ".uiMaxNoOfComTerminals",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 22.0,
+    "Name": {
+      "#text": ".uiMaxNoOfPersistentAnalogReg",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 24.0,
+    "Name": {
+      "#text": ".uiMaxNoOfMeasurementChannels",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 26.0,
+    "Name": {
+      "#text": ".uiMaxNoOfMeasurementValues",
+      "@Constant": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 28.0,
+    "Name": {
+      "#text": ".uiMaxNoOfStandardLogics",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 30.0,
+    "Name": {
+      "#text": ".uiMaxNoOfStandardLogicInputs",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 32.0,
+    "Name": {
+      "#text": ".uiMaxNoOfStandardLogicOutputs",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 34.0,
+    "Name": {
+      "#text": ".uiMaxNoOfComplexLogics",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 36.0,
+    "Name": {
+      "#text": ".uiMaxNoOfComplexLogicInputs",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 38.0,
+    "Name": {
+      "#text": ".uiMaxNoOfComplexLogicOutputs",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 40.0,
+    "Name": {
+      "#text": ".uiMaxNoOfBuildingLogics",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 42.0,
+    "Name": {
+      "#text": ".uiMaxNoOfBuildingLogicInputs",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 44.0,
+    "Name": {
+      "#text": ".uiMaxNoOfBuildingLogicOutputs",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 46.0,
+    "Name": {
+      "#text": ".uiMaxNoOfRetainMerker",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 48.0,
+    "Name": {
+      "#text": ".uiMaxNoOfTerminalDescription",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 50.0,
+    "Name": {
+      "#text": ".dtDateTimeMin",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "DT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 54.0,
+    "Name": {
+      "#text": ".dtDateTime7Days",
+      "@Constant": 1.0
+    },
+    "Type": "DT"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 58.0,
+    "Name": {
+      "#text": ".gMaxLengthOfName",
+      "@Constant": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 60.0,
+    "Name": {
+      "#text": ".tod1Hour",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "TOD"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 64.0,
+    "Name": {
+      "#text": ".tod1Min",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "TOD"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 188.0,
+    "Name": {
+      "#text": ".AMSPORT_LOGGER",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 190.0,
+    "Name": {
+      "#text": ".AMSPORT_EVENTLOG",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                R0 Real time\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 192.0,
+    "Name": {
+      "#text": ".AMSPORT_R0_RTIME",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                I/O Driver\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 194.0,
+    "Name": {
+      "#text": ".AMSPORT_R0_IO",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 196.0,
+    "Name": {
+      "#text": ".AMSPORT_R0_NC",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 198.0,
+    "Name": {
+      "#text": ".AMSPORT_R0_NCSAF",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 200.0,
+    "Name": {
+      "#text": ".AMSPORT_R0_NCSVB",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 202.0,
+    "Name": {
+      "#text": ".AMSPORT_R0_ISG",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 204.0,
+    "Name": {
+      "#text": ".AMSPORT_R0_CNC",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 206.0,
+    "Name": {
+      "#text": ".AMSPORT_R0_LINE",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 208.0,
+    "Name": {
+      "#text": ".AMSPORT_R0_PLC",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 210.0,
+    "Name": {
+      "#text": ".AMSPORT_R0_PLC_RTS1",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 212.0,
+    "Name": {
+      "#text": ".AMSPORT_R0_PLC_RTS2",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 214.0,
+    "Name": {
+      "#text": ".AMSPORT_R0_PLC_RTS3",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 216.0,
+    "Name": {
+      "#text": ".AMSPORT_R0_PLC_RTS4",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 218.0,
+    "Name": {
+      "#text": ".AMSPORT_R0_CAM",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 220.0,
+    "Name": {
+      "#text": ".AMSPORT_R0_CAMTOOL",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                System Service\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 222.0,
+    "Name": {
+      "#text": ".AMSPORT_R3_SYSSERV",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 224.0,
+    "Name": {
+      "#text": ".ADSSTATE_INVALID",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 226.0,
+    "Name": {
+      "#text": ".ADSSTATE_IDLE",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 228.0,
+    "Name": {
+      "#text": ".ADSSTATE_RESET",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 230.0,
+    "Name": {
+      "#text": ".ADSSTATE_INIT",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 232.0,
+    "Name": {
+      "#text": ".ADSSTATE_START",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 234.0,
+    "Name": {
+      "#text": ".ADSSTATE_RUN",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 236.0,
+    "Name": {
+      "#text": ".ADSSTATE_STOP",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 238.0,
+    "Name": {
+      "#text": ".ADSSTATE_SAVECFG",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 240.0,
+    "Name": {
+      "#text": ".ADSSTATE_LOADCFG",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 242.0,
+    "Name": {
+      "#text": ".ADSSTATE_POWERFAILURE",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 244.0,
+    "Name": {
+      "#text": ".ADSSTATE_POWERGOOD",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 246.0,
+    "Name": {
+      "#text": ".ADSSTATE_ERROR",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 248.0,
+    "Name": {
+      "#text": ".ADSSTATE_SHUTDOWN",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 250.0,
+    "Name": {
+      "#text": ".ADSSTATE_SUSPEND",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "IGroup": 16448.0,
+    "IOffset": 252.0,
+    "Name": {
+      "#text": ".ADSSTATE_RESUME",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                ADS reserved index groups\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 254.0,
+    "Name": {
+      "#text": ".ADSSTATE_MAXSTATES",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 256.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_OPENCREATE",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 260.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_OPENREAD",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 264.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_OPENWRITE",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 268.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_CREATEFILE",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 272.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_CLOSEHANDLE",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 276.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_FOPEN",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 280.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_FCLOSE",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 284.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_FREAD",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 288.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_FWRITE",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 292.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_FSEEK",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 296.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_FTELL",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 300.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_FGETS",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 304.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_FPUTS",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 308.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_FSCANF",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 312.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_FPRINTF",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 316.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_FEOF",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 320.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_FDELETE",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 324.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_FRENAME",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 328.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_REG_HKEYLOCALMACHINE",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 332.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_SENDEMAIL",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 336.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_TIMESERVICES",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 340.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_STARTPROCESS",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "Comment": "\r\n                System service index offsets: SYSTEMSERVICE_TIMESERVICES\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 344.0,
+    "Name": {
+      "#text": ".SYSTEMSERVICE_CHANGENETID",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 348.0,
+    "Name": {
+      "#text": ".TIMESERVICE_DATEANDTIME",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 352.0,
+    "Name": {
+      "#text": ".TIMESERVICE_SYSTEMTIMES",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 356.0,
+    "Name": {
+      "#text": ".TIMESERVICE_RTCTIMEDIFF",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 32.0,
+    "Comment": "\r\n                ADSLOGxxx log control mask types\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 360.0,
+    "Name": {
+      "#text": ".TIMESERVICE_ADJUSTTIMETORTC",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UDINT"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 59.0,
+    "Name": {
+      "#text": ".BOOTDATAFLAGS_RETAIN_LOADED",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 364.0,
+    "Name": {
+      "#text": ".BOOTDATAFLAGS_RETAIN_INVALID",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 365.0,
+    "Name": {
+      "#text": ".BOOTDATAFLAGS_RETAIN_REQUESTED",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 366.0,
+    "Name": {
+      "#text": ".BOOTDATAFLAGS_PERSISTENT_LOADED",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 8.0,
+    "Comment": "\r\n                system state constants (-> SYSTEMINFOTYPE.systemStateFlags)\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 367.0,
+    "Name": {
+      "#text": ".BOOTDATAFLAGS_PERSISTENT_INVALID",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 8.0,
+    "Comment": "\r\n                blue screen of death\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 368.0,
+    "Name": {
+      "#text": ".SYSTEMSTATEFLAGS_BSOD",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 8.0,
+    "Comment": "\r\n                realtime violation - latency time\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 369.0,
+    "Name": {
+      "#text": ".SYSTEMSTATEFLAGS_RTVIOLATION",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 32.0,
+    "Comment": "\r\n                \"r\": Opens for reading. If the file does not exist or cannot be found, the call fails.\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 370.0,
+    "Name": {
+      "#text": ".FOPEN_MODEREAD",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "DWORD"
+  },
+  {
+    "BitSize": 32.0,
+    "Comment": "\r\n                \"w\": Opens an empty file for writing. If the given file exists, its contents are destroyed.\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 374.0,
+    "Name": {
+      "#text": ".FOPEN_MODEWRITE",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "DWORD"
+  },
+  {
+    "BitSize": 32.0,
+    "Comment": "\r\n                \"a\": Opens for writing at the end of the file (appending) without removing the EOF marker before writing new data to the file; creates the file first if it doesn’t exist.\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 378.0,
+    "Name": {
+      "#text": ".FOPEN_MODEAPPEND",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "DWORD"
+  },
+  {
+    "BitSize": 32.0,
+    "Comment": "\r\n                \"+\": Opens for reading and writing\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 382.0,
+    "Name": {
+      "#text": ".FOPEN_MODEPLUS",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "DWORD"
+  },
+  {
+    "BitSize": 32.0,
+    "Comment": "\r\n                \"b\": Open in binary (untranslated) mode.\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 386.0,
+    "Name": {
+      "#text": ".FOPEN_MODEBINARY",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "DWORD"
+  },
+  {
+    "BitSize": 32.0,
+    "Comment": "\r\n                \"t\": Open in text (translated) mode.\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 390.0,
+    "Name": {
+      "#text": ".FOPEN_MODETEXT",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "DWORD"
+  },
+  {
+    "BitSize": 32.0,
+    "Comment": "\r\n                ASCII to decimal and decimal digits to ASCII codes\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 394.0,
+    "Name": {
+      "#text": ".PI",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "REAL"
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                paraPtr: GenericOutputOnly_fpara;\t\tparaPtr.pRet == POINTER TO ST_RTSc166Metrics\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 398.0,
+    "Name": {
+      "#text": ".GetRTSc166Metrics_id",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                paraPtr: GenericOutputOnly_fpara;\t\tparaPtr.pRet == POINTER TO WORD\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 400.0,
+    "Name": {
+      "#text": ".GetFBusStatus_id",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                paraPtr: GenericOutputOnly_fpara;\t\tparaPtr.pRet == POINTER TO WORD\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 402.0,
+    "Name": {
+      "#text": ".GetTBusStatus_id",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                paraPtr: GenericOutputOnly_fpara;\t\tparaPtr.pRet == POINTER TO DWORD\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 404.0,
+    "Name": {
+      "#text": ".GetSysTick_id",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                paraPtr: PresetSysTick_fpara;\t\t\tparaPtr.pRet == POINTER TO DWORD\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 406.0,
+    "Name": {
+      "#text": ".PresetSysTick_id",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                paraPtr: TrigTBusCycle_fpara;\t\t\tparaPtr.pRet == POINTER TO INT\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 408.0,
+    "Name": {
+      "#text": ".TrigTBusCycle_id",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                paraPtr: GenericOutputOnly_fpara;\t\tparaPtr.pRet == POINTER TO WORD\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 410.0,
+    "Name": {
+      "#text": ".Reboot_id",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                paraPtr: AdsRemoteLogDINT_fpara;\tparaPtr.pRet == POINTER TO INT\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 412.0,
+    "Name": {
+      "#text": ".AdsRemoteLogDINT_id",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                paraPtr: AdsRemoteLogSTR_fpara;\t\tparaPtr.pRet == POINTER TO INT\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 414.0,
+    "Name": {
+      "#text": ".AdsRemoteLogSTR_id",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                paraPtr: AdsRemoteLogREAL_fpara;\tparaPtr.pRet == POINTER TO INT\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 416.0,
+    "Name": {
+      "#text": ".AdsRemoteLogREAL_id",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 16.0,
+    "Comment": "\r\n                paraPtr: GenericOutputOnly_fpara;\t\tparaPtr.pRet == POINTER TO WORD\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 418.0,
+    "Name": {
+      "#text": ".GetSysInfo_id",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": "UINT"
+  },
+  {
+    "BitSize": 1520.0,
+    "IGroup": 16448.0,
+    "IOffset": 28386.0,
+    "Name": {
+      "#text": ".stDefaultParameter",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ST_DEFAULT_PARAMETER",
+      "@Decoration": "10046FEA"
+    }
+  },
+  {
+    "BitSize": 128.0,
+    "IGroup": 16448.0,
+    "IOffset": 28576.0,
+    "Name": {
+      "#text": ".HEXASC_CODES",
+      "@Constant": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ARRAY [0..15] OF BYTE",
+      "@Decoration": 20010154.0
+    }
+  },
+  {
+    "BitSize": 4096.0,
+    "IGroup": 61472.0,
+    "IOffset": 0.0,
+    "Name": {
+      "#text": ".Inputs",
+      "@Static": "Input",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ARRAY [0..511] OF BYTE",
+      "@Decoration": 20010344.0
+    }
+  },
+  {
+    "BitSize": 4096.0,
+    "IGroup": 16448.0,
+    "IOffset": 28592.0,
+    "Name": {
+      "#text": ".InputsM",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ARRAY [0..511] OF BYTE",
+      "@Decoration": 20010344.0
+    }
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 61472.0,
+    "IOffset": 512.0,
+    "Name": {
+      "#text": ".K_BusState",
+      "@Static": "Input"
+    },
+    "Type": "USINT"
+  },
+  {
+    "BitSize": 4096.0,
+    "IGroup": 61488.0,
+    "IOffset": 0.0,
+    "Name": {
+      "#text": ".Outputs",
+      "@Static": "Output",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ARRAY [0..511] OF BYTE",
+      "@Decoration": 20010344.0
+    }
+  },
+  {
+    "BitSize": 8384.0,
+    "Comment": "\r\n                Daten, die per ADS Write vom Webservice zum BC geschickt werden\r\n            ",
+    "IGroup": 16416.0,
+    "IOffset": 0.0,
+    "Name": {
+      "#text": ".Master",
+      "@Static": "MArea",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ST_ADS_TO_BC",
+      "@Decoration": "1029697D"
+    }
+  },
+  {
+    "BitSize": 12160.0,
+    "Comment": "\r\n                Daten die per ADS Write zum Webservice geschickt werden\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 29104.0,
+    "Name": {
+      "#text": ".Slave",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ST_ADS_FROM_BC",
+      "@Decoration": "101ED850"
+    }
+  },
+  {
+    "BitSize": 12160.0,
+    "IGroup": 16448.0,
+    "IOffset": 30624.0,
+    "Name": {
+      "#text": ".SlaveToSend",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ST_ADS_FROM_BC",
+      "@Decoration": "101ED850"
+    }
+  },
+  {
+    "BitSize": 27424.0,
+    "IGroup": 16448.0,
+    "IOffset": 27136.0,
+    "Name": {
+      "#text": ".IO",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ST_LOCAL_IO",
+      "@Decoration": "1005458F"
+    }
+  },
+  {
+    "BitSize": 15440.0,
+    "Comment": "\r\n                Daten, die per ADS Write vom Webservice zum BC geschickt werden\r\n            ",
+    "IGroup": 16416.0,
+    "IOffset": 1048.0,
+    "Name": {
+      "#text": ".RetainDataM",
+      "@Static": "MArea",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ST_RETAIN_DATA",
+      "@Decoration": "100ED9D7"
+    }
+  },
+  {
+    "BitSize": 5760.0,
+    "IGroup": 16416.0,
+    "IOffset": 3000.0,
+    "Name": {
+      "#text": ".PersistentData",
+      "@Static": "MArea",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ST_PERSISTENT_DATA",
+      "@Decoration": "100AA302"
+    }
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 32144.0,
+    "Name": {
+      "#text": ".tDefaultDelayBetweenAdsTelegrams",
+      "@TaskPrio": 1.0
+    },
+    "Type": "TIME"
+  },
+  {
+    "BitSize": 144.0,
+    "IGroup": 16448.0,
+    "IOffset": 32148.0,
+    "Name": {
+      "#text": ".fbTonError",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "TON",
+      "@Decoration": "10060D24"
+    }
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 32166.0,
+    "Name": {
+      "#text": ".bPersistentDataRead",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BOOL"
+  },
+  {
+    "BitSize": 40.0,
+    "IGroup": 16448.0,
+    "IOffset": 32167.0,
+    "Name": {
+      "#text": ".sTemp",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "STRING(4)",
+      "@Decoration": 40000005.0
+    }
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 32172.0,
+    "Name": {
+      "#text": ".byTemp",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 32173.0,
+    "Name": {
+      "#text": ".byTemp2",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BYTE"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 32174.0,
+    "Name": {
+      "#text": ".rTemp",
+      "@TaskPrio": 1.0
+    },
+    "Type": "REAL"
+  },
+  {
+    "BitSize": 32.0,
+    "IGroup": 16448.0,
+    "IOffset": 32178.0,
+    "Name": {
+      "#text": ".rTemp2",
+      "@TaskPrio": 1.0
+    },
+    "Type": "REAL"
+  },
+  {
+    "BitSize": 4096.0,
+    "IGroup": 16448.0,
+    "IOffset": 32182.0,
+    "Name": {
+      "#text": ".aTemp",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ARRAY [0..511] OF BYTE",
+      "@Decoration": 20010344.0
+    }
+  },
+  {
+    "BitSize": 112.0,
+    "IGroup": 16448.0,
+    "IOffset": 32694.0,
+    "Name": {
+      "#text": ".fbSetMerker",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "FB_SET_MERKER",
+      "@Decoration": "10041A0B"
+    }
+  },
+  {
+    "BitSize": 1760.0,
+    "IGroup": 16448.0,
+    "IOffset": 30564.0,
+    "Name": {
+      "#text": ".fbSunCalcPos",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "FB_CALC_SUN_POS",
+      "@Decoration": "1031E1A1"
+    }
+  },
+  {
+    "BitSize": 1760.0,
+    "IGroup": 16448.0,
+    "IOffset": 30784.0,
+    "Name": {
+      "#text": ".fbSunCalcPosFuture",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "FB_CALC_SUN_POS",
+      "@Decoration": "1031E1A1"
+    }
+  },
+  {
+    "BitSize": 15440.0,
+    "IGroup": 16432.0,
+    "IOffset": 0.0,
+    "Name": {
+      "#text": ".RetainData",
+      "@Persistent": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ST_RETAIN_DATA",
+      "@Decoration": "100ED9D7"
+    }
+  },
+  {
+    "BitSize": 2256.0,
+    "IGroup": 16448.0,
+    "IOffset": 31004.0,
+    "Name": {
+      "#text": ".fbDCF77_TIME",
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "DCF77_TIME",
+      "@Decoration": "1024B3A2"
+    }
+  },
+  {
+    "BitSize": 8.0,
+    "IGroup": 16448.0,
+    "IOffset": 32708.0,
+    "Name": {
+      "#text": ".bDCF77Used",
+      "@TaskPrio": 1.0
+    },
+    "Type": "BOOL"
+  },
+  {
+    "BitSize": 336.0,
+    "IGroup": 16448.0,
+    "IOffset": 32710.0,
+    "Name": {
+      "#text": ".SYSTEMINFO",
+      "@IsDefinedInLibrary": 1.0
+    },
+    "Type": {
+      "#text": "FW_SystemInfoType",
+      "@Decoration": 10066081.0
+    }
+  },
+  {
+    "BitSize": 272.0,
+    "IGroup": 16448.0,
+    "IOffset": 31286.0,
+    "Name": {
+      "#text": ".SYSTEMTASKINFO",
+      "@IsDefinedInLibrary": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "FW_SystemTaskInfoType",
+      "@Decoration": "100863C1"
+    }
+  },
+  {
+    "BitSize": 80.0,
+    "Comment": "\r\n                Firmware function id's\r\n            ",
+    "IGroup": 16448.0,
+    "IOffset": 32752.0,
+    "Name": {
+      "#text": ".FORMAT_DECASC_CODES",
+      "@Constant": 1.0,
+      "@IsDefinedInLibrary": 1.0,
+      "@TaskPrio": 1.0
+    },
+    "Type": {
+      "#text": "ARRAY [0..9] OF BYTE",
+      "@Decoration": "2001014E"
+    }
+  }
+]

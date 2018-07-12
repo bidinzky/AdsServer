@@ -1,0 +1,36 @@
+[11.07.2018/16:21:12][AdsServer][ERROR] input dir asdf not found
+[11.07.2018/16:21:35][ads_server][ERROR] input dir "asdf" not found
+[11.07.2018/16:22:20][ads_server][ERROR] input dir "asdf" not found
+[11.07.2018/16:23:59][ads_server][ERROR] input dir "asdf" not found
+[11.07.2018/16:29:36][ads_server][ERROR] input dir "asdf" not found
+[11.07.2018/16:29:41][ads_server][ERROR] input dir "-" not found
+[11.07.2018/16:48:39][ads_server][ERROR] input dir "-" not found
+[11.07.2018/17:04:28][ads_server][ERROR] config file "config.json" does not exist
+[11.07.2018/17:14:14][ads_server][ERROR] config file "config.json" does not exist
+[12.07.2018/09:04:16][ads_server][ERROR] version file "versions/v14.tpy," does not exist
+[12.07.2018/09:04:27][ads_server][ERROR] version file "versions/v14.tpy," does not exist
+[12.07.2018/09:05:56][ads_server][ERROR] version file "versions/v14.tpy," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
+[12.07.2018/09:06:07][ads_server][ERROR] version file "versions\\\\v14.tpy," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
+[12.07.2018/09:06:16][ads_server][ERROR] version file "versions\\v14.tpy," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
+[12.07.2018/09:08:54][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\versions/v14.tpy," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
+[12.07.2018/09:09:01][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\versions\\v14.tpy," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
+[12.07.2018/09:12:47][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\v14.tpy," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
+[12.07.2018/09:13:00][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\test," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
+[12.07.2018/09:13:39][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\test," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
+[12.07.2018/09:13:57][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\test.txt," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
+[12.07.2018/09:13:59][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\test.txt," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
+[12.07.2018/09:14:14][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\Cargo.toml," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
+[12.07.2018/09:15:46][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer" does not exist Err(Os { code: 5, kind: PermissionDenied, message: "Zugriff verweigert" })
+[12.07.2018/09:16:10][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer" does not exist Err(Os { code: 5, kind: PermissionDenied, message: "Zugriff verweigert" })
+[12.07.2018/09:16:44][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer" does not exist Err(Os { code: 5, kind: PermissionDenied, message: "Zugriff verweigert" })
+[12.07.2018/09:17:49][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer" does not exist Err(Os { code: 5, kind: PermissionDenied, message: "Zugriff verweigert" })
+[12.07.2018/09:18:57][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer" does not exist Err(Os { code: 5, kind: PermissionDenied, message: "Zugriff verweigert" })
+[12.07.2018/09:19:15][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer" does not exist Err(Os { code: 5, kind: PermissionDenied, message: "Zugriff verweigert" })
+[12.07.2018/09:19:37][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer" does not exist Err(Os { code: 5, kind: PermissionDenied, message: "Zugriff verweigert" })
+[12.07.2018/09:19:56][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\version\\v14.tpy" does not exist Err(Os { code: 3, kind: NotFound, message: "Das System kann den angegebenen Pfad nicht finden." })
+[12.07.2018/09:20:41][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\version\\v14.tpy" does not exist Err(Os { code: 3, kind: NotFound, message: "Das System kann den angegebenen Pfad nicht finden." })
+[12.07.2018/09:23:27][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\version\\v14.tpy" does not exist Err(Os { code: 3, kind: NotFound, message: "Das System kann den angegebenen Pfad nicht finden." })
+[12.07.2018/16:05:26][ws::handler][ERROR] WS Error <Protocol>: Unable to parse WebSocket key.
+[12.07.2018/16:05:26][ws::handler][ERROR] WS Error <Protocol>: Unable to parse WebSocket key.
+[12.07.2018/16:06:14][ws::handler][ERROR] WS Error <Protocol>: Unable to parse WebSocket key.
+[12.07.2018/16:06:14][ws::handler][ERROR] WS Error <Protocol>: Unable to parse WebSocket key.

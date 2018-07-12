@@ -1,0 +1,23 @@
+{
+  connection_parameter: {
+    ams_net_id: 172.16.21.2.1.1
+    ams_port: 801
+  },
+  plc: [
+    {
+        version: 14
+        ip: 172.16.21.1
+        ams_net_id: 172.16.21.1.1.1
+        ams_port: 800
+    }
+  ],
+  versions: {
+    14: {
+        path: versions\v14.tpy
+        symbol_names: [
+            .RetainDataM
+            .Master
+        ]
+    }
+  }
+}

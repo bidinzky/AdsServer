@@ -1,0 +1,21 @@
+[package]
+name = "ads_server"
+version = "0.1.0"
+authors = ["binder-lukas <binder.lukas@outlook.com>"]
+
+[dependencies]
+clap = "*"
+serde_derive = "*"
+serde = "*"
+serde_json = "*"
+byteorder = "*"
+num-traits = "*"
+quickxml_to_serde = "*"
+log = "*"
+fern = "*"
+chrono = "*"
+config = "*"
+crossbeam = "*"
+crossbeam-channel = "*"
+rand = "*"
+actix-web = { git = "https://github.com/actix/actix-web" }
