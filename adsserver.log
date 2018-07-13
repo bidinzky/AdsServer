@@ -34,3 +34,18 @@
 [12.07.2018/16:05:26][ws::handler][ERROR] WS Error <Protocol>: Unable to parse WebSocket key.
 [12.07.2018/16:06:14][ws::handler][ERROR] WS Error <Protocol>: Unable to parse WebSocket key.
 [12.07.2018/16:06:14][ws::handler][ERROR] WS Error <Protocol>: Unable to parse WebSocket key.
+[13.07.2018/08:49:32][actix_web::pipeline][WARN] Error occured during request handling: can not parse "id" to a u32
+[13.07.2018/08:50:20][actix_web::pipeline][WARN] Error occured during request handling: can not parse "id" to a u32
+[13.07.2018/08:50:23][actix_web::pipeline][WARN] Error occured during request handling: can not parse "id" to a u32
+[13.07.2018/08:51:41][actix_web::pipeline][WARN] Error occured during request handling: can not parse "id" to a u32
+[13.07.2018/08:51:42][actix_web::pipeline][WARN] Error occured during request handling: can not parse "id" to a u32
+[13.07.2018/08:52:25][actix_web::pipeline][WARN] Error occured during request handling: can not parse "test" to a u32
+[13.07.2018/08:52:48][actix_web::pipeline][WARN] Error occured during request handling: can not parse "asdf" to a u32
+[13.07.2018/14:05:20][actix_web::pipeline][WARN] Error occured during request handling: entity not found
+[13.07.2018/14:05:30][actix_web::pipeline][WARN] Error occured during request handling: entity not found
+[13.07.2018/14:06:24][actix_web::pipeline][WARN] Error occured during request handling: entity not found
+[13.07.2018/14:11:15][actix_web::pipeline][WARN] Error occured during request handling: entity not found
+[13.07.2018/14:11:48][actix_web::pipeline][WARN] Error occured during request handling: entity not found
+[13.07.2018/14:12:28][actix_web::pipeline][WARN] Error occured during request handling: entity not found
+[13.07.2018/14:13:11][actix_web::pipeline][WARN] Error occured during request handling: entity not found
+[13.07.2018/14:13:19][actix_web::pipeline][WARN] Error occured during request handling: entity not found

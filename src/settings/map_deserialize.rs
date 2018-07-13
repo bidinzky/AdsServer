@@ -1,4 +1,5 @@
 use serde::de::{self, Deserialize, Deserializer};
+use serde::ser::{Serialize, Serializer};
 use std::cmp::Ordering;
 use std::ops::Deref;
 
@@ -24,6 +25,15 @@ impl<'de> Deserialize<'de> for N {
         let s = String::deserialize(deserializer)?;
         let f = s.parse::<u32>().map_err(de::Error::custom)?;
         Ok(f.into())
+    }
+}
+
+impl Serialize for N {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_u32(self.0)
     }
 }
 

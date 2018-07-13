@@ -103,7 +103,7 @@ pub fn read_ads_number<T: Bounded + PartialOrd + ToPrimitive + FromPrimitive, R:
     };
     if T::min_value() < T::from_i64(0).unwrap() {
         Value::Number(value.to_i64().unwrap().into())
-    }else{
+    } else {
         Value::Number(value.to_u64().unwrap().into())
     }
 }

@@ -18,4 +18,7 @@ config = "*"
 crossbeam = "*"
 crossbeam-channel = "*"
 rand = "*"
-actix-web = { git = "https://github.com/actix/actix-web" }
+actix = "*"
+actix-web = "*"
+chashmap = "*"
+bus = "*"

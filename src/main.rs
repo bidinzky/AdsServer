@@ -1,7 +1,6 @@
 extern crate byteorder;
 extern crate num_traits;
 extern crate quickxml_to_serde;
-#[macro_use]
 extern crate serde_json;
 #[macro_use]
 extern crate serde_derive;
@@ -14,23 +13,32 @@ extern crate chrono;
 extern crate config;
 extern crate fern;
 
-extern crate crossbeam_channel as channel;
 extern crate crossbeam;
+extern crate crossbeam_channel as channel;
 extern crate rand;
 
+extern crate actix;
 extern crate actix_web;
 
-mod settings;
-mod xml_to_struct;
+extern crate chashmap;
+
+extern crate bus;
+
 mod networking;
+mod settings;
+mod ws;
+mod xml_to_struct;
 
-use std::collections::HashMap;
 use std::path::Path;
-
 use actix_web::{server, App, HttpRequest, Responder};
+use networking::SimpleSocket;
 
 fn file_exists<T: AsRef<Path>>(path: T) -> bool {
     path.as_ref().exists() && path.as_ref().is_file()
+}
+
+fn index(info: HttpRequest<ws::WsState>) -> impl Responder {
+    serde_json::to_string_pretty(&*info.state().config.read().unwrap())
 }
 
 fn main() {
@@ -78,7 +86,7 @@ fn main() {
         .merge(config::Environment::with_prefix("APP"))
         .unwrap();
     let config = settings.try_into::<settings::Setting>().unwrap();
-    let t: HashMap<u32, _> = config
+    let t: chashmap::CHashMap<u32, _> = config
         .versions
         .iter()
         .filter_map(|version| {
@@ -92,10 +100,24 @@ fn main() {
             }
         })
         .collect();
-    ws::listen("0.0.0.0:8000", |out| {
-        move |msg| {
-            eprintln!("msg = {:#?}", msg);
-            out.send(msg)
-        }
-    }).unwrap();
+    let v: Vec<_> = config
+        .plc
+        .iter()
+        .map(|plc| {
+            SimpleSocket::new(&plc.ip, (plc.ams_net_id.clone(), plc.ams_port), &config.connection_parameter)
+        })
+        .collect();
+    println!("{:?}", v);
+    let ws_state = ws::WsState {
+        map: std::sync::Arc::new(t),
+        config: std::sync::Arc::new(std::sync::RwLock::new(config.plc)),
+    };
+    server::new(move || {
+        App::with_state(ws_state.clone())
+            .middleware(actix_web::middleware::Logger::default())
+            .resource("/ws/{net_id}/{port}/", |r| r.with(ws::Ws::ws_index))
+            .resource("/", |r| r.with(index))
+    }).bind("127.0.0.1:8000")
+        .unwrap()
+        .run();
 }

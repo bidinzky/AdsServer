@@ -1,14 +1,15 @@
-use super::helper::{read_ads_number, type_from_value, write_ads_number, number_from_value};
+use super::helper::{number_from_value, read_ads_number, type_from_value, write_ads_number};
 use super::Value;
 use byteorder::{ReadBytesExt, WriteBytesExt};
+use chashmap::CHashMap;
 use std::collections::HashMap;
 use std::io;
 
 #[derive(Debug)]
 pub struct AdsVersion {
-    pub map: HashMap<String, AdsType>,
-    pub symbols: HashMap<String, Symbol>,
-    pub search_index: HashMap<String, String>,
+    pub map: CHashMap<String, AdsType>,
+    pub symbols: CHashMap<String, Symbol>,
+    pub search_index: CHashMap<String, String>,
 }
 
 #[derive(Debug)]
@@ -166,37 +167,33 @@ impl AdsType {
                 let mut i = data.as_i64().expect("no enum") as i16;
                 if !keys.contains_key(&i) {
                     let mut ik = keys.iter();
-                    let (first,_) = ik.next().unwrap();
-                    let (last,_) = ik.last().unwrap();
+                    let (first, _) = ik.next().unwrap();
+                    let (last, _) = ik.last().unwrap();
                     if &i < first {
                         i = *first;
-                    }else if &i > last {
+                    } else if &i > last {
                         i = *last;
                     }
                 }
                 write_ads_number(i, w, &None)
             }
             AdsType::Struct { properties, .. } => {
-                properties
-                    .iter()
-                    .fold(Ok(()), |acc, p| {
-                        match acc {
-                            Ok(_) => p.ty.to_writer(&data[&p.name], w, map),
-                            _ => acc
-                        }
-                    })
+                properties.iter().fold(Ok(()), |acc, p| match acc {
+                    Ok(_) => p.ty.to_writer(&data[&p.name], w, map),
+                    _ => acc,
+                })
             }
             AdsType::Array { ty, bounds, .. } => {
                 let l = bounds.iter().fold(1, |acc, v| {
                     if v.1 > v.0 {
                         acc * (v.1 - v.0)
-                    }else{
+                    } else {
                         acc * (v.0 - v.1)
                     }
                 });
-                (0..l).map(|i| ty.to_writer(&data[i],w, map)).collect()
-            },
-            AdsType::Primitive(ref ty) => ty.to_writer(data, w, map)
+                (0..l).map(|i| ty.to_writer(&data[i], w, map)).collect()
+            }
+            AdsType::Primitive(ref ty) => ty.to_writer(data, w, map),
         }
     }
 
@@ -219,7 +216,7 @@ impl AdsType {
                 let l = bounds.iter().fold(1, |acc, v| {
                     if v.1 > v.0 {
                         acc * (v.1 - v.0)
-                    }else{
+                    } else {
                         acc * (v.0 - v.1)
                     }
                 });

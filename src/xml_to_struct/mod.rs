@@ -2,9 +2,10 @@ mod helper;
 pub mod types;
 
 use super::settings::VersionSetting;
+use chashmap::CHashMap;
 use serde_json::Value;
 use std::{
-    collections::HashMap, fs::File, io::{BufRead, BufReader}
+    collections::HashMap, fs::File, io::{BufRead, BufReader},
 };
 
 use self::helper::{build_dependencies, number_from_value, type_from_value};
@@ -19,7 +20,7 @@ fn xml_to_json<R: BufRead>(r: R) -> Value {
 pub fn read_tpy(conf: &VersionSetting) -> AdsVersion {
     let f = BufReader::new(File::open(&conf.path).unwrap());
     let e = xml_to_json(f);
-    let symbols: HashMap<String, Symbol> = (&e["PlcProjectInfo"]["Symbols"]["Symbol"])
+    let symbols: CHashMap<String, Symbol> = (&e["PlcProjectInfo"]["Symbols"]["Symbol"])
         .as_array()
         .unwrap()
         .iter()
@@ -45,7 +46,7 @@ pub fn read_tpy(conf: &VersionSetting) -> AdsVersion {
         .as_array()
         .unwrap();
     let search_vec = vec!["ST_ADS_FROM_BC", "ST_ADS_TO_BC", "ST_RETAIN_DATA"];
-    let mut search_index = HashMap::with_capacity(search_vec.len());
+    let search_index = CHashMap::with_capacity(search_vec.len());
     let map: HashMap<String, AdsType> = data_types
         .iter()
         .filter_map(|f| {
@@ -78,7 +79,7 @@ pub fn read_tpy(conf: &VersionSetting) -> AdsVersion {
             build_dependencies(f, &mut dep, &map);
         })
         .collect();
-    let fmap: HashMap<String, AdsType> = map
+    let fmap: CHashMap<String, AdsType> = map
         .into_iter()
         .filter_map(|(k, v)| match dep.contains(&k) {
             true => Some((k, v)),

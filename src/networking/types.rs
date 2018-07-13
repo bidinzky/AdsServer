@@ -1,68 +1,71 @@
-use byteorder::{WriteBytesExt, ReadBytesExt, LittleEndian};
+use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 use std;
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[repr(C)]
 pub enum AdsCommandData {
     ReadReq {
         index_group: u32,
         index_offset: u32,
-        length: u32
+        length: u32,
     },
     ReadRes {
         result: u32,
         length: u32,
-        data: Vec<u8>
+        data: Vec<u8>,
     },
     WriteReq {
         index_group: u32,
         index_offset: u32,
         length: u32,
-        data: Vec<u8>
+        data: Vec<u8>,
     },
     WriteRes {
-        result: u32
-    }
+        result: u32,
+    },
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AmsTcpHeader {
     pub length: u32,
-    pub header: AmsHeader
+    pub header: AmsHeader,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AmsHeader {
     pub target: Vec<u8>,
     pub source: Vec<u8>,
     pub command_id: u16,
     pub state_flags: u16,
     pub inv_id: u32,
-    pub data: AdsCommandData
+    pub data: AdsCommandData,
 }
 
 impl AdsCommandData {
-    pub fn from_reader<T: ReadBytesExt + std::fmt::Debug>(t: &mut T, command_id: u16, state_flags: u16) -> Self {
+    pub fn from_reader<T: ReadBytesExt + std::fmt::Debug>(
+        t: &mut T,
+        command_id: u16,
+        state_flags: u16,
+    ) -> Self {
         match (command_id, state_flags) {
-            (2,4) =>
-                AdsCommandData::ReadReq {
-                    index_group: t.read_u32::<LittleEndian>().unwrap(),
-                    index_offset: t.read_u32::<LittleEndian>().unwrap(),
-                    length: t.read_u32::<LittleEndian>().unwrap()
-                },
-            (2,5) => {
+            (2, 4) => AdsCommandData::ReadReq {
+                index_group: t.read_u32::<LittleEndian>().unwrap(),
+                index_offset: t.read_u32::<LittleEndian>().unwrap(),
+                length: t.read_u32::<LittleEndian>().unwrap(),
+            },
+            (2, 5) => {
                 let result = t.read_u32::<LittleEndian>().unwrap();
                 let length = t.read_u32::<LittleEndian>().unwrap();
                 AdsCommandData::ReadRes {
                     result,
                     length,
                     data: {
-                        let mut buf = vec![0u8;length as usize];
+                        let mut buf = vec![0u8; length as usize];
                         let _ = t.read_exact(&mut buf);
                         buf
-                    }
+                    },
                 }
-            },
-            (3,4) => {
+            }
+            (3, 4) => {
                 let index_group = t.read_u32::<LittleEndian>().unwrap();
                 let index_offset = t.read_u32::<LittleEndian>().unwrap();
                 let length = t.read_u32::<LittleEndian>().unwrap();
@@ -71,17 +74,16 @@ impl AdsCommandData {
                     index_offset,
                     length,
                     data: {
-                        let mut buf = vec![0u8;length as usize];
+                        let mut buf = vec![0u8; length as usize];
                         let _ = t.read_exact(&mut buf);
                         buf
-                    }
+                    },
                 }
+            }
+            (3, 5) => AdsCommandData::WriteRes {
+                result: t.read_u32::<LittleEndian>().unwrap(),
             },
-            (3,5) =>
-                AdsCommandData::WriteRes {
-                    result: t.read_u32::<LittleEndian>().unwrap(),
-                },
-            p => panic!("unknown state_flags command_id pattern {:#?}", p)
+            p => panic!("unknown state_flags command_id pattern {:#?}", p),
         }
     }
     pub fn into_writer<U: WriteBytesExt + std::fmt::Debug>(self, writer: &mut U) {
@@ -89,35 +91,33 @@ impl AdsCommandData {
             AdsCommandData::ReadReq {
                 index_group,
                 index_offset,
-                length
+                length,
             } => {
                 let _ = writer.write_u32::<LittleEndian>(index_group);
                 let _ = writer.write_u32::<LittleEndian>(index_offset);
                 let _ = writer.write_u32::<LittleEndian>(length);
-            },
+            }
             AdsCommandData::ReadRes {
                 result,
                 length,
-                data
+                data,
             } => {
                 let _ = writer.write_u32::<LittleEndian>(result);
                 let _ = writer.write_u32::<LittleEndian>(length);
                 let _ = writer.write_all(data.as_slice());
-            },
+            }
             AdsCommandData::WriteReq {
                 index_group,
                 index_offset,
                 length,
-                data
+                data,
             } => {
                 let _ = writer.write_u32::<LittleEndian>(index_group);
                 let _ = writer.write_u32::<LittleEndian>(index_offset);
                 let _ = writer.write_u32::<LittleEndian>(length);
                 let _ = writer.write_all(data.as_slice());
-            },
-            AdsCommandData::WriteRes {
-                result
-            } => {
+            }
+            AdsCommandData::WriteRes { result } => {
                 let _ = writer.write_u32::<LittleEndian>(result);
             }
         };
@@ -125,32 +125,30 @@ impl AdsCommandData {
 
     pub fn gen_res(&self) -> AdsCommandData {
         match self {
-            AdsCommandData::ReadReq {length,..} => AdsCommandData::ReadRes {
+            AdsCommandData::ReadReq { length, .. } => AdsCommandData::ReadRes {
                 result: 0,
                 length: *length,
-                data: vec![0u8; *length as usize]
+                data: vec![0u8; *length as usize],
             },
-            AdsCommandData::WriteReq {..} => AdsCommandData::WriteRes {
-                result: 0
-            },
-            _ => panic!("cant create res from res")
+            AdsCommandData::WriteReq { .. } => AdsCommandData::WriteRes { result: 0 },
+            _ => panic!("cant create res from res"),
         }
     }
 
     pub fn size_of(&self) -> u32 {
         match self {
-            AdsCommandData::ReadRes {length, ..} => 8+*length,
-            AdsCommandData::ReadReq {..} => 12,
-            AdsCommandData::WriteReq {length,..} => 12+length,
-            AdsCommandData::WriteRes {..} => 4
+            AdsCommandData::ReadRes { length, .. } => 8 + *length,
+            AdsCommandData::ReadReq { .. } => 12,
+            AdsCommandData::WriteReq { length, .. } => 12 + length,
+            AdsCommandData::WriteRes { .. } => 4,
         }
     }
 }
 
 impl AmsHeader {
     pub fn from_reader<T: ReadBytesExt + std::fmt::Debug>(t: &mut T) -> Self {
-        let mut target = vec![0;8];
-        let mut source = vec![0;8];
+        let mut target = vec![0; 8];
+        let mut source = vec![0; 8];
         let _ = t.read_exact(&mut target);
         let _ = t.read_exact(&mut source);
         let command_id: u16 = t.read_u16::<LittleEndian>().unwrap();
@@ -163,7 +161,7 @@ impl AmsHeader {
             command_id,
             state_flags,
             inv_id: invoke_id,
-            data: AdsCommandData::from_reader(t, command_id, state_flags)
+            data: AdsCommandData::from_reader(t, command_id, state_flags),
         }
     }
 
@@ -186,7 +184,7 @@ impl AmsHeader {
             command_id: self.command_id,
             state_flags: 5,
             inv_id: self.inv_id,
-            data: data.unwrap_or(self.data.gen_res())
+            data: data.unwrap_or(self.data.gen_res()),
         }
     }
 }
@@ -199,12 +197,12 @@ impl AmsTcpHeader {
         let length: u32 = (&buf[..]).read_u32::<LittleEndian>().unwrap();
         AmsTcpHeader {
             length,
-            header: AmsHeader::from_reader(t)
+            header: AmsHeader::from_reader(t),
         }
     }
 
     pub fn into_writer<U: WriteBytesExt + std::fmt::Debug>(self, writer: &mut U) {
-        let mut buf = vec![0u8;2];
+        let mut buf = vec![0u8; 2];
         let _ = buf.write_u32::<LittleEndian>(self.length);
         let _ = writer.write_all(buf.as_mut_slice());
         self.header.into_writer(writer);
@@ -214,10 +212,10 @@ impl AmsTcpHeader {
         if self.header.state_flags == 4 {
             let header = self.header.gen_res(data);
             AmsTcpHeader {
-                length: 32+header.data.size_of(),
-                header
+                length: 32 + header.data.size_of(),
+                header,
             }
-        }else{
+        } else {
             panic!("cant make result for response");
         }
     }
