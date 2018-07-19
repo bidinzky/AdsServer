@@ -156,8 +156,8 @@ impl AmsHeader {
         let _: u64 = t.read_u64::<LittleEndian>().unwrap();
         let invoke_id: u32 = t.read_u32::<LittleEndian>().unwrap();
         AmsHeader {
-            target: target,
-            source: source,
+            target,
+            source,
             command_id,
             state_flags,
             inv_id: invoke_id,
@@ -184,7 +184,7 @@ impl AmsHeader {
             command_id: self.command_id,
             state_flags: 5,
             inv_id: self.inv_id,
-            data: data.unwrap_or(self.data.gen_res()),
+            data: data.unwrap_or_else(|| self.data.gen_res()),
         }
     }
 }

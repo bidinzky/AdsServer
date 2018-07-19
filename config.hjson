@@ -17,6 +17,7 @@
         symbol_names: [
             .RetainDataM
             .Master
+            .Slave
         ]
     }
   }

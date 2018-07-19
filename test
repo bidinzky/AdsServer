@@ -1,1146 +1,1042 @@
-{
-    14: AdsVersion {
-        map: {
-            "2001A7A9": Array {
-                bounds: [
-                    (
-                        64,
-                        1
-                    )
-                ],
-                ty: Other {
-                    name: "ST_PARAMETER_STANDARD_LOGIC",
-                    reference: "10048F40"
-                }
-            },
-            "100868B9": Struct {
-                name: "ST_PARAMETER_LIGHT",
-                properties: [
-                    AdsStructProperties {
-                        name: "iMin",
-                        ty: Other {
-                            name: "INT(0..32766)",
-                            reference: "5000F401"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "iMax",
-                        ty: Int(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "iMinMemMode",
-                        ty: Int(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "iOnValueNoMemMode",
-                        ty: Int(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "wDimmRampTime",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "wMinMaxRampDelay",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "wDimmOffTime",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "wDimmOnTime",
-                        ty: UInt(
-                            None
-                        )
-                    }
-                ]
-            },
-            "2001A782": Array {
-                bounds: [
-                    (
-                        16,
-                        1
-                    )
-                ],
-                ty: Other {
-                    name: "ST_PARAMETER_BUILDING_LOGIC",
-                    reference: "10048F4C"
-                }
-            },
-            "2001024F": Array {
-                bounds: [
-                    (
-                        256,
-                        1
-                    )
-                ],
-                ty: UInt(
-                    None
-                )
-            },
-            "100208CB": Struct {
-                name: "ST_DATA",
-                properties: [
-                    AdsStructProperties {
-                        name: "bySourceType",
-                        ty: USInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "byChannel",
-                        ty: USInt(
-                            None
-                        )
-                    }
-                ]
-            },
-            "10048F4C": Struct {
-                name: "ST_PARAMETER_BUILDING_LOGIC",
-                properties: [
-                    AdsStructProperties {
-                        name: "stDataIn",
-                        ty: Other {
-                            name: "ARRAY [1..6] OF ST_DATA",
-                            reference: "20011AF4"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "stDataOut",
-                        ty: Other {
-                            name: "ARRAY [1..4] OF ST_DATA",
-                            reference: "20011AF2"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "byLogicType",
-                        ty: USInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "bIsInUse",
-                        ty: USInt(
-                            None
-                        )
-                    }
-                ]
-            },
-            "1011160000": Struct {
-                name: "ST_PARAMETER_BLIND",
-                properties: [
-                    AdsStructProperties {
-                        name: "udiPosIntervall",
-                        ty: Other {
-                            name: "UDINT(1..7200)",
-                            reference: "50000174"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "wBacklashTimeUp",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "wBacklashTimeDown",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "wTurningTimeUp",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "wTurningTimeDown",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "wBlindHeight",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "wManualBlockTime",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "iAngleLimitUp",
-                        ty: Other {
-                            name: "INT(0..180)",
-                            reference: "5000A007"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "iAngleLimitDown",
-                        ty: Other {
-                            name: "INT(-180..0)",
-                            reference: "5000A601"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "uiLouvreWidth",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiLouvreSpacing",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiFixedShutterHeight",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiMaxLightIncidence",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiWindowHeight",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiWindowDistanceFloor",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "stBlindPositionTable",
-                        ty: Other {
-                            name: "ST_PARAMETER_BLIND_POSITION_TABLE",
-                            reference: "10045C14"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "ePositioningMode",
-                        ty: Int(
-                            None
-                        )
-                    }
-                ]
-            },
-            "10048F40": Struct {
-                name: "ST_PARAMETER_STANDARD_LOGIC",
-                properties: [
-                    AdsStructProperties {
-                        name: "stDataIn",
-                        ty: Other {
-                            name: "ARRAY [1..3] OF ST_DATA",
-                            reference: "20011AF1"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "stDataOut",
-                        ty: Other {
-                            name: "ARRAY [1..1] OF ST_DATA",
-                            reference: "20011AEF"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "byLogicType",
-                        ty: USInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "bIsInUse",
-                        ty: USInt(
-                            None
-                        )
-                    }
-                ]
-            },
-            "20011AEF": Array {
-                bounds: [
-                    (
-                        1,
-                        1
-                    )
-                ],
-                ty: Other {
-                    name: "ST_DATA",
-                    reference: "100208CB"
-                }
-            },
-            "100ED9D7": Struct {
-                name: "ST_RETAIN_DATA",
-                properties: [
-                    AdsStructProperties {
-                        name: "aMerker",
-                        ty: Other {
-                            name: "ARRAY [1..256] OF WORD",
-                            reference: "2001024F"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "stStandardLogicParameter",
-                        ty: Other {
-                            name: "ARRAY [1..64] OF ST_PARAMETER_STANDARD_LOGIC",
-                            reference: "2001A7A9"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "stComplexLogicParameter",
-                        ty: Other {
-                            name: "ARRAY [1..16] OF ST_PARAMETER_COMPLEX_LOGIC",
-                            reference: "2001A74A"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "stBuildingLogicParameter",
-                        ty: Other {
-                            name: "ARRAY [1..16] OF ST_PARAMETER_BUILDING_LOGIC",
-                            reference: "2001A782"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "wSwitchTime",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "stLightParameter",
-                        ty: Other {
-                            name: "ST_PARAMETER_LIGHT",
-                            reference: "100868B9"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "stBlindParameter",
-                        ty: Other {
-                            name: "ST_PARAMETER_BLIND",
-                            reference: "1011160000"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "dtStartTime",
-                        ty: DT
-                    },
-                    AdsStructProperties {
-                        name: "udiTerminalSum",
-                        ty: UDInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "bRunBcLogicAfterReboot",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "byDummy",
-                        ty: USInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "sLicenseKey",
-                        ty: String(
-                            15
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "byTerminalConfigChangeCounter",
-                        ty: USInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "bDummy",
-                        ty: Bool
-                    }
-                ]
-            },
-            "20010344": Array {
-                bounds: [
-                    (
-                        512,
-                        0
-                    )
-                ],
-                ty: USInt(
-                    None
-                )
-            },
-            "5000F401": Primitive(
-                Int(
-                    Some(
-                        SubRange {
-                            min: 0,
-                            max: 32766
-                        }
-                    )
-                )
-            ),
-            "200130A7": Array {
-                bounds: [
-                    (
-                        15,
-                        0
-                    )
-                ],
-                ty: Other {
-                    name: "ST_TERMINAL_DESCRIPTION",
-                    reference: "1007198D"
-                }
-            },
-            "20021DE5": Array {
-                bounds: [
-                    (
-                        24,
-                        1
-                    ),
-                    (
-                        2,
-                        0
-                    )
-                ],
-                ty: Other {
-                    name: "ST_REG_DATA",
-                    reference: "10030A6A"
-                }
-            },
-            "5000A007": Primitive(
-                Int(
-                    Some(
-                        SubRange {
-                            min: 0,
-                            max: 180
-                        }
-                    )
-                )
-            ),
-            "30000511": Enum {
-                name: "E_SERIAL_FIELDBUS",
-                keys: {
-                    0: "eNoFieldbus",
-                    1: "eDMX",
-                    2: "eModbusRtuMaster",
-                    3: "eModbusRtuSlave"
-                }
-            },
-            "1005DDBE": Struct {
-                name: "ST_COUPLER_CONIFG",
-                properties: [
-                    AdsStructProperties {
-                        name: "aIpAddress",
-                        ty: Other {
-                            name: "ARRAY [0..3] OF BYTE",
-                            reference: "20010148"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "aSubnetMask",
-                        ty: Other {
-                            name: "ARRAY [0..3] OF BYTE",
-                            reference: "20010148"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "sName",
-                        ty: String(
-                            9
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "sMac",
-                        ty: String(
-                            6
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "byDummy",
-                        ty: USInt(
-                            None
-                        )
-                    }
-                ]
-            },
-            "2001018D": Array {
-                bounds: [
-                    (
-                        64,
-                        0
-                    )
-                ],
-                ty: UInt(
-                    None
-                )
-            },
-            "20010148": Array {
-                bounds: [
-                    (
-                        4,
-                        0
-                    )
-                ],
-                ty: USInt(
-                    None
-                )
-            },
-            "1029697D": Struct {
-                name: "ST_ADS_TO_BC",
-                properties: [
-                    AdsStructProperties {
-                        name: "udiDataSize",
-                        ty: UDInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "udiVersion",
-                        ty: UDInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "udiIdxGrp",
-                        ty: UDInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "udiIdxOffs",
-                        ty: UDInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "udiRequestCounter",
-                        ty: UDInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "sNetId",
-                        ty: String(
-                            23
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiPort",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "Outputs",
-                        ty: Other {
-                            name: "ARRAY [0..511] OF BYTE",
-                            reference: "20010344"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "bUnchangedOutputsWatchdog",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "bReadMerkerCyclic",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "dtDateTime",
-                        ty: DT
-                    },
-                    AdsStructProperties {
-                        name: "tWatchdog",
-                        ty: Time
-                    },
-                    AdsStructProperties {
-                        name: "tDelayBetweenAdsTelegrams",
-                        ty: Time
-                    },
-                    AdsStructProperties {
-                        name: "tRefreshAnalog",
-                        ty: Time
-                    },
-                    AdsStructProperties {
-                        name: "stTerminalDescription",
-                        ty: Other {
-                            name: "ARRAY [0..14] OF ST_TERMINAL_DESCRIPTION",
-                            reference: "200130A7"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "bGetAllDataFromBc",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "bPersistentDataActive",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "bResetPersistentData",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "bRunBcLogic",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "bRunBcLogicWatchdog",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "bAnalyseSensorErrors",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "bSetAllOutputsFalse",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "bRebuildMapping",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "bReboot",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "bSetNewRetainData",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "uiLengthNewRetainData",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiFirstNewRetainByte",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "bReadMerker",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "bSendNoInputChangesToMaster",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "stAnalogChannelRegs",
-                        ty: Other {
-                            name: "ARRAY [1..24, 0..1] OF ST_REG_DATA",
-                            reference: "20021DE5"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "uiNoOfDmxChannelsToAnalogChannels",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "iLongitude",
-                        ty: Int(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "iLatitude",
-                        ty: Int(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "iTimeZoneMinute",
-                        ty: Int(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "sSecondMasterNetId",
-                        ty: String(
-                            23
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "udiSecondMasterPort",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "wPin",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "tWatchdogSecondMaster",
-                        ty: Time
-                    },
-                    AdsStructProperties {
-                        name: "sLicenseKey",
-                        ty: String(
-                            15
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "wPlcState",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "stCouplerConfig",
-                        ty: Other {
-                            name: "ST_COUPLER_CONIFG",
-                            reference: "1005DDBE"
-                        }
-                    }
-                ]
-            },
-            "20011AF2": Array {
-                bounds: [
-                    (
-                        4,
-                        1
-                    )
-                ],
-                ty: Other {
-                    name: "ST_DATA",
-                    reference: "100208CB"
-                }
-            },
-            "5000A601": Primitive(
-                Int(
-                    Some(
-                        SubRange {
-                            min: -180,
-                            max: 0
-                        }
-                    )
-                )
-            ),
-            "10048F4A": Struct {
-                name: "ST_PARAMETER_COMPLEX_LOGIC",
-                properties: [
-                    AdsStructProperties {
-                        name: "stDataIn",
-                        ty: Other {
-                            name: "ARRAY [1..6] OF ST_DATA",
-                            reference: "20011AF4"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "stDataOut",
-                        ty: Other {
-                            name: "ARRAY [1..3] OF ST_DATA",
-                            reference: "20011AF1"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "byLogicType",
-                        ty: USInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "bIsInUse",
-                        ty: USInt(
-                            None
-                        )
-                    }
-                ]
-            },
-            "10030A6A": Struct {
-                name: "ST_REG_DATA",
-                properties: [
-                    AdsStructProperties {
-                        name: "wValue",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "byReg",
-                        ty: USInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "byReadWrite",
-                        ty: USInt(
-                            None
-                        )
-                    }
-                ]
-            },
-            "20010157": Array {
-                bounds: [
-                    (
-                        6,
-                        0
-                    )
-                ],
-                ty: UInt(
-                    None
-                )
-            },
-            "20011AF1": Array {
-                bounds: [
-                    (
-                        3,
-                        1
-                    )
-                ],
-                ty: Other {
-                    name: "ST_DATA",
-                    reference: "100208CB"
-                }
-            },
-            "2001A74A": Array {
-                bounds: [
-                    (
-                        16,
-                        1
-                    )
-                ],
-                ty: Other {
-                    name: "ST_PARAMETER_COMPLEX_LOGIC",
-                    reference: "10048F4A"
-                }
-            },
-            "1007198D": Struct {
-                name: "ST_TERMINAL_DESCRIPTION",
-                properties: [
-                    AdsStructProperties {
-                        name: "wName",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "wInputBits",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "wOutputBits",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "wChannels",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "bInput",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "bOutput",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "wDummy",
-                        ty: UInt(
-                            None
-                        )
-                    }
-                ]
-            },
-            "10045C14": Struct {
-                name: "ST_PARAMETER_BLIND_POSITION_TABLE",
-                properties: [
-                    AdsStructProperties {
-                        name: "uiSunElevation",
-                        ty: Other {
-                            name: "ARRAY [0..5] OF UINT",
-                            reference: "20010157"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "uiBlindPosition",
-                        ty: Other {
-                            name: "ARRAY [0..5] OF UINT",
-                            reference: "20010157"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "bValid",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "byDummy",
-                        ty: USInt(
-                            None
-                        )
-                    }
-                ]
-            },
-            "20011AF4": Array {
-                bounds: [
-                    (
-                        6,
-                        1
-                    )
-                ],
-                ty: Other {
-                    name: "ST_DATA",
-                    reference: "100208CB"
-                }
-            },
-            "101ED850": Struct {
-                name: "ST_ADS_FROM_BC",
-                properties: [
-                    AdsStructProperties {
-                        name: "udiDataSize",
-                        ty: UDInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "udiVersion",
-                        ty: UDInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "udiResponseCounter",
-                        ty: UDInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "dtDateTime",
-                        ty: DT
-                    },
-                    AdsStructProperties {
-                        name: "Inputs",
-                        ty: Other {
-                            name: "ARRAY [0..511] OF BYTE",
-                            reference: "20010344"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "sError",
-                        ty: String(
-                            255
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "udiTerminalConfigChangeCounter",
-                        ty: UDInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "aTerminals",
-                        ty: Other {
-                            name: "ARRAY [0..63] OF WORD",
-                            reference: "2001018D"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "eActiveSerialFieldbus",
-                        ty: Other {
-                            name: "E_SERIAL_FIELDBUS",
-                            reference: "30000511"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "uiPersistentDataAddr",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiRetainDataAddr",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiLastInputByte",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiLastOutputByte",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiKBusCode",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiKBusArgument",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiCycleTimeMs",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiTerminalDescriptionFailed",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiLastNoOfAnalogChannel",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiLastNoOfDigitalChannel",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiLastNoOfComTerminal",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiLastNoOfMeasurementChannel",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "uiFirstFieldbusAnalogChannel",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "bPersistentDataActive",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "bBcLogicActive",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "bMerkerRefreshed",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "bScondMasterActive",
-                        ty: Bool
-                    },
-                    AdsStructProperties {
-                        name: "sSystemId",
-                        ty: String(
-                            31
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "wDummy",
-                        ty: UInt(
-                            None
-                        )
-                    },
-                    AdsStructProperties {
-                        name: "stCouplerConfig",
-                        ty: Other {
-                            name: "ST_COUPLER_CONIFG",
-                            reference: "1005DDBE"
-                        }
-                    },
-                    AdsStructProperties {
-                        name: "aMerker",
-                        ty: Other {
-                            name: "ARRAY [1..256] OF WORD",
-                            reference: "2001024F"
-                        }
-                    }
-                ]
-            },
-            "50000174": Primitive(
-                UDInt(
-                    Some(
-                        SubRange {
-                            min: 1,
-                            max: 7200
-                        }
-                    )
-                )
-            )
-        },
-        symbols: {
-            "1029697D": Symbol {
-                index_group: 16416,
-                index_offset: 0,
-                name: Name {
-                    text: ".Master",
-                    decoration: None
-                },
-                ty: Other {
-                    name: "ST_ADS_TO_BC",
-                    reference: "1029697D"
-                }
-            },
-            "100ED9D7": Symbol {
-                index_group: 16416,
-                index_offset: 1048,
-                name: Name {
-                    text: ".RetainDataM",
-                    decoration: None
-                },
-                ty: Other {
-                    name: "ST_RETAIN_DATA",
-                    reference: "100ED9D7"
-                }
-            }
-        },
-        search_index: {
-            "ST_ADS_FROM_BC": "101ED850",
-            "ST_ADS_TO_BC": "1029697D",
-            "ST_RETAIN_DATA": "100ED9D7"
-        }
-    }
-}
+[
+    0,
+    0,
+    0,
+    0,
+    12,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+]

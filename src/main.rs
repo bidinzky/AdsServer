@@ -12,10 +12,31 @@ extern crate log;
 extern crate chrono;
 extern crate config;
 extern crate fern;
+#[macro_use(
+    take_until,
+    named,
+    separated_list,
+    tag,
+    alt,
+    take,
+    ws,
+    call,
+    error_position,
+    sep,
+    wrap_sep
+)]
+extern crate nom;
 
 extern crate crossbeam;
 extern crate crossbeam_channel as channel;
 extern crate rand;
+
+extern crate bytes;
+extern crate tokio;
+extern crate tokio_io;
+extern crate tokio_tcp;
+
+extern crate tokio_codec;
 
 extern crate actix;
 extern crate actix_web;
@@ -24,20 +45,25 @@ extern crate chashmap;
 
 extern crate bus;
 
+mod json_diff;
 mod networking;
 mod settings;
 mod ws;
 mod xml_to_struct;
 
-use std::path::Path;
 use actix_web::{server, App, HttpRequest, Responder};
-use networking::SimpleSocket;
+//use networking::SimpleSocket;
+use std::path::Path;
+use std::sync::{Arc, RwLock};
 
+#[inline(always)]
 fn file_exists<T: AsRef<Path>>(path: T) -> bool {
     path.as_ref().exists() && path.as_ref().is_file()
 }
 
-fn index(info: HttpRequest<ws::WsState>) -> impl Responder {
+#[inline(always)]
+#[cfg_attr(feature = "cargo-clippy", allow(needless_pass_by_value))]
+fn index(info: HttpRequest<Arc<ws::WsState>>) -> impl Responder {
     serde_json::to_string_pretty(&*info.state().config.read().unwrap())
 }
 
@@ -86,7 +112,7 @@ fn main() {
         .merge(config::Environment::with_prefix("APP"))
         .unwrap();
     let config = settings.try_into::<settings::Setting>().unwrap();
-    let t: chashmap::CHashMap<u32, _> = config
+    let sps_types: chashmap::CHashMap<u32, _> = config
         .versions
         .iter()
         .filter_map(|version| {
@@ -100,18 +126,26 @@ fn main() {
             }
         })
         .collect();
-    let v: Vec<_> = config
+    /*let v: chashmap::CHashMap<_, _> = config
         .plc
         .iter()
-        .map(|plc| {
-            SimpleSocket::new(&plc.ip, (plc.ams_net_id.clone(), plc.ams_port), &config.connection_parameter)
+        .filter_map(|plc| {
+            match SimpleSocket::new(
+                &(plc.ip.as_str(),48898),
+                &(plc.ams_net_id.clone(), plc.ams_port),
+                &config.connection_parameter,
+            ) {
+                Ok(s) => Some((plc.version, s)),
+                Err(_) => None
+            }
         })
         .collect();
-    println!("{:?}", v);
-    let ws_state = ws::WsState {
-        map: std::sync::Arc::new(t),
-        config: std::sync::Arc::new(std::sync::RwLock::new(config.plc)),
-    };
+    println!("{:?}", v);*/
+    let ws_state = Arc::new(ws::WsState {
+        map: sps_types,
+        config: RwLock::new(config.plc),
+        data: chashmap::CHashMap::new(),
+    });
     server::new(move || {
         App::with_state(ws_state.clone())
             .middleware(actix_web::middleware::Logger::default())

@@ -1,51 +1,13 @@
-[11.07.2018/16:21:12][AdsServer][ERROR] input dir asdf not found
-[11.07.2018/16:21:35][ads_server][ERROR] input dir "asdf" not found
-[11.07.2018/16:22:20][ads_server][ERROR] input dir "asdf" not found
-[11.07.2018/16:23:59][ads_server][ERROR] input dir "asdf" not found
-[11.07.2018/16:29:36][ads_server][ERROR] input dir "asdf" not found
-[11.07.2018/16:29:41][ads_server][ERROR] input dir "-" not found
-[11.07.2018/16:48:39][ads_server][ERROR] input dir "-" not found
-[11.07.2018/17:04:28][ads_server][ERROR] config file "config.json" does not exist
-[11.07.2018/17:14:14][ads_server][ERROR] config file "config.json" does not exist
-[12.07.2018/09:04:16][ads_server][ERROR] version file "versions/v14.tpy," does not exist
-[12.07.2018/09:04:27][ads_server][ERROR] version file "versions/v14.tpy," does not exist
-[12.07.2018/09:05:56][ads_server][ERROR] version file "versions/v14.tpy," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
-[12.07.2018/09:06:07][ads_server][ERROR] version file "versions\\\\v14.tpy," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
-[12.07.2018/09:06:16][ads_server][ERROR] version file "versions\\v14.tpy," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
-[12.07.2018/09:08:54][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\versions/v14.tpy," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
-[12.07.2018/09:09:01][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\versions\\v14.tpy," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
-[12.07.2018/09:12:47][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\v14.tpy," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
-[12.07.2018/09:13:00][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\test," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
-[12.07.2018/09:13:39][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\test," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
-[12.07.2018/09:13:57][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\test.txt," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
-[12.07.2018/09:13:59][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\test.txt," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
-[12.07.2018/09:14:14][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\Cargo.toml," does not exist Err(Os { code: 2, kind: NotFound, message: "Das System kann die angegebene Datei nicht finden." })
-[12.07.2018/09:15:46][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer" does not exist Err(Os { code: 5, kind: PermissionDenied, message: "Zugriff verweigert" })
-[12.07.2018/09:16:10][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer" does not exist Err(Os { code: 5, kind: PermissionDenied, message: "Zugriff verweigert" })
-[12.07.2018/09:16:44][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer" does not exist Err(Os { code: 5, kind: PermissionDenied, message: "Zugriff verweigert" })
-[12.07.2018/09:17:49][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer" does not exist Err(Os { code: 5, kind: PermissionDenied, message: "Zugriff verweigert" })
-[12.07.2018/09:18:57][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer" does not exist Err(Os { code: 5, kind: PermissionDenied, message: "Zugriff verweigert" })
-[12.07.2018/09:19:15][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer" does not exist Err(Os { code: 5, kind: PermissionDenied, message: "Zugriff verweigert" })
-[12.07.2018/09:19:37][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer" does not exist Err(Os { code: 5, kind: PermissionDenied, message: "Zugriff verweigert" })
-[12.07.2018/09:19:56][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\version\\v14.tpy" does not exist Err(Os { code: 3, kind: NotFound, message: "Das System kann den angegebenen Pfad nicht finden." })
-[12.07.2018/09:20:41][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\version\\v14.tpy" does not exist Err(Os { code: 3, kind: NotFound, message: "Das System kann den angegebenen Pfad nicht finden." })
-[12.07.2018/09:23:27][ads_server][ERROR] version file "C:\\Users\\BinderLukas\\CLionProjects\\AdsServer\\version\\v14.tpy" does not exist Err(Os { code: 3, kind: NotFound, message: "Das System kann den angegebenen Pfad nicht finden." })
-[12.07.2018/16:05:26][ws::handler][ERROR] WS Error <Protocol>: Unable to parse WebSocket key.
-[12.07.2018/16:05:26][ws::handler][ERROR] WS Error <Protocol>: Unable to parse WebSocket key.
-[12.07.2018/16:06:14][ws::handler][ERROR] WS Error <Protocol>: Unable to parse WebSocket key.
-[12.07.2018/16:06:14][ws::handler][ERROR] WS Error <Protocol>: Unable to parse WebSocket key.
-[13.07.2018/08:49:32][actix_web::pipeline][WARN] Error occured during request handling: can not parse "id" to a u32
-[13.07.2018/08:50:20][actix_web::pipeline][WARN] Error occured during request handling: can not parse "id" to a u32
-[13.07.2018/08:50:23][actix_web::pipeline][WARN] Error occured during request handling: can not parse "id" to a u32
-[13.07.2018/08:51:41][actix_web::pipeline][WARN] Error occured during request handling: can not parse "id" to a u32
-[13.07.2018/08:51:42][actix_web::pipeline][WARN] Error occured during request handling: can not parse "id" to a u32
-[13.07.2018/08:52:25][actix_web::pipeline][WARN] Error occured during request handling: can not parse "test" to a u32
-[13.07.2018/08:52:48][actix_web::pipeline][WARN] Error occured during request handling: can not parse "asdf" to a u32
-[13.07.2018/14:05:20][actix_web::pipeline][WARN] Error occured during request handling: entity not found
-[13.07.2018/14:05:30][actix_web::pipeline][WARN] Error occured during request handling: entity not found
-[13.07.2018/14:06:24][actix_web::pipeline][WARN] Error occured during request handling: entity not found
-[13.07.2018/14:11:15][actix_web::pipeline][WARN] Error occured during request handling: entity not found
-[13.07.2018/14:11:48][actix_web::pipeline][WARN] Error occured during request handling: entity not found
-[13.07.2018/14:12:28][actix_web::pipeline][WARN] Error occured during request handling: entity not found
-[13.07.2018/14:13:11][actix_web::pipeline][WARN] Error occured during request handling: entity not found
-[13.07.2018/14:13:19][actix_web::pipeline][WARN] Error occured during request handling: entity not found
+[17.07.2018/08:19:44][ads_server::ws][ERROR] started, Ws {
+    plc_conn: [
+        172,
+        16,
+        21,
+        1,
+        1,
+        1,
+        32,
+        3
+    ],
+    version: 14
+}

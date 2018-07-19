@@ -64,12 +64,11 @@ pub fn read_tpy(conf: &VersionSetting) -> AdsVersion {
     let _: Vec<_> = map
         .iter()
         .filter_map(|(k, v)| match v {
-            AdsType::Struct { name, .. } => match search_vec.contains(&name.as_ref()) {
-                false => None,
-                true => {
-                    search_index.insert(name.to_string(), k.to_string());
-                    Some(k)
-                }
+            AdsType::Struct { name, .. } => if search_vec.contains(&name.as_ref()) {
+                None
+            } else {
+                search_index.insert(name.to_string(), k.to_string());
+                Some(k)
             },
             _ => None,
         })
@@ -81,10 +80,7 @@ pub fn read_tpy(conf: &VersionSetting) -> AdsVersion {
         .collect();
     let fmap: CHashMap<String, AdsType> = map
         .into_iter()
-        .filter_map(|(k, v)| match dep.contains(&k) {
-            true => Some((k, v)),
-            false => None,
-        })
+        .filter_map(|(k, v)| if dep.contains(&k) { Some((k, v)) } else { None })
         .collect();
     AdsVersion {
         map: fmap,

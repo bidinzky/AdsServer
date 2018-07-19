@@ -61,14 +61,17 @@ pub struct SubRange {
 pub enum AdsType {
     Enum {
         name: String,
+        bit_size: u32,
         keys: HashMap<i16, String>,
     },
     Struct {
         name: String,
+        bit_size: u32,
         properties: Vec<AdsStructProperties>,
     },
     Array {
         bounds: Vec<(usize, usize)>,
+        bit_size: u32,
         ty: AdsPlcType,
     },
     Primitive(AdsPlcType),
@@ -79,7 +82,7 @@ impl AdsPlcType {
         &self,
         data: &Value,
         w: &mut W,
-        map: &HashMap<String, AdsType>,
+        map: &CHashMap<String, AdsType>,
     ) -> Result<(), io::Error> {
         match self {
             AdsPlcType::Bool => w.write_u8(data.as_bool().expect("no bool") as u8),
@@ -121,15 +124,19 @@ impl AdsPlcType {
             }
             AdsPlcType::String(ref len) => {
                 let strs = data.as_str().expect("no str").as_bytes();
-                w.write_all(&strs[..=*len])
+                let _ = w.write_all(&strs[..*len]);
+                w.write_u8(0)
             }
-            AdsPlcType::Other { ref reference, .. } => map[reference].to_writer(data, w, map),
+            AdsPlcType::Other { ref reference, .. } => map
+                .get(&reference.trim().to_string())
+                .unwrap()
+                .to_writer(data, w, map),
         }
     }
     pub fn as_data_struct<R: ReadBytesExt>(
         &self,
         r: &mut R,
-        map: &HashMap<String, AdsType>,
+        map: &CHashMap<String, AdsType>,
     ) -> Value {
         match self {
             AdsPlcType::Bool => (r.read_u8().unwrap() >= 1).into(),
@@ -150,7 +157,10 @@ impl AdsPlcType {
                 let _ = r.read_exact(&mut b);
                 Value::String(String::from_utf8(b).unwrap())
             }
-            AdsPlcType::Other { ref reference, .. } => map[reference].as_data_struct(r, map),
+            AdsPlcType::Other { ref reference, .. } => map
+                .get(&reference.trim().to_string())
+                .unwrap()
+                .as_data_struct(r, map),
         }
     }
 }
@@ -160,7 +170,7 @@ impl AdsType {
         &self,
         data: &Value,
         w: &mut W,
-        map: &HashMap<String, AdsType>,
+        map: &CHashMap<String, AdsType>,
     ) -> Result<(), io::Error> {
         match self {
             AdsType::Enum { keys, .. } => {
@@ -169,9 +179,9 @@ impl AdsType {
                     let mut ik = keys.iter();
                     let (first, _) = ik.next().unwrap();
                     let (last, _) = ik.last().unwrap();
-                    if &i < first {
+                    if i < *first {
                         i = *first;
-                    } else if &i > last {
+                    } else if i > *last {
                         i = *last;
                     }
                 }
@@ -200,14 +210,14 @@ impl AdsType {
     pub fn as_data_struct<R: ReadBytesExt>(
         &self,
         r: &mut R,
-        map: &HashMap<String, AdsType>,
+        map: &CHashMap<String, AdsType>,
     ) -> Value {
         match self {
             AdsType::Enum { .. } => read_ads_number::<i16, R>(r, &None),
             AdsType::Struct { properties, .. } => Value::Object(
                 properties
                     .iter()
-                    .map(|p| (p.name.to_string(), p.ty.as_data_struct(r, map)))
+                    .map(|p| (p.name.trim().to_string(), p.ty.as_data_struct(r, map)))
                     .collect(),
             ),
             AdsType::Array {
@@ -226,12 +236,13 @@ impl AdsType {
         }
     }
 
-    pub fn from_value<'a>(r: &'a Value) -> Option<AdsType> {
+    pub fn from_value(r: &Value) -> Option<AdsType> {
         let name: Name = (&r["Name"]).into();
+        let bit_size = number_from_value(&r["BitSize"]);
         match r {
             Value::Object(ref obj) => match obj {
                 obj if obj.contains_key("EnumInfo") => Some(AdsType::Enum {
-                    name: name.text.to_string(),
+                    name: name.text.trim().to_string(),
                     keys: obj["EnumInfo"]
                         .as_array()
                         .expect("no array")
@@ -242,9 +253,10 @@ impl AdsType {
                             (n, s)
                         })
                         .collect(),
+                    bit_size,
                 }),
                 obj if obj.contains_key("SubItem") => Some(AdsType::Struct {
-                    name: name.text.to_string(),
+                    name: name.text.trim().to_string(),
                     properties: {
                         let sub_items = match obj.get("SubItem") {
                             Some(Value::Array(ref a)) => a.clone(),
@@ -266,6 +278,7 @@ impl AdsType {
                             })
                             .collect()
                     },
+                    bit_size,
                 }),
                 obj if obj.contains_key("ArrayInfo") => {
                     let mut array_info = match obj.get("ArrayInfo") {
@@ -288,6 +301,7 @@ impl AdsType {
                             })
                             .collect(),
                         ty: type_from_value(&obj["Type"], None),
+                        bit_size,
                     })
                 }
                 obj if obj.contains_key("Type") => {
@@ -306,6 +320,24 @@ impl AdsType {
                 _ => None,
             },
             _ => None,
+        }
+    }
+
+    pub fn len(&self) -> u32 {
+        match self {
+            AdsType::Primitive(p) => match p {
+                AdsPlcType::String(ref s) => (s + 1) as u32,
+                AdsPlcType::Bool => 1,
+                AdsPlcType::SInt(_) => 1,
+                AdsPlcType::USInt(_) => 1,
+                AdsPlcType::Int(_) => 2,
+                AdsPlcType::UInt(_) => 2,
+                AdsPlcType::LReal => 8,
+                _ => 4,
+            },
+            AdsType::Array { bit_size, .. } => *bit_size,
+            AdsType::Struct { bit_size, .. } => *bit_size,
+            AdsType::Enum { bit_size, .. } => *bit_size,
         }
     }
 }
