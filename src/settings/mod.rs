@@ -1,8 +1,3 @@
-extern crate ads_networking as networking;
-extern crate serde;
-#[macro_use]
-extern crate serde_derive;
-
 mod map_deserialize;
 use self::map_deserialize::N;
 use networking::ToPlcConn;

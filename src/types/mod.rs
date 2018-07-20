@@ -1,8 +1,3 @@
-extern crate byteorder;
-extern crate chashmap;
-extern crate num_traits;
-extern crate serde_json;
-
 pub mod helper;
 
 use self::helper::{number_from_value, read_ads_number, type_from_value, write_ads_number};

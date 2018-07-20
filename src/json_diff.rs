@@ -1,8 +1,4 @@
-#[macro_use]
-extern crate nom;
-extern crate serde_json;
-
-use nom::{types::CompleteStr as Input, IResult};
+use nom::{self, types::CompleteStr as Input, IResult};
 use serde_json::Value;
 
 #[derive(Debug)]

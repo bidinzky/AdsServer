@@ -1,15 +1,25 @@
+use super::json_diff::{merge, schema_parser, Schema};
+use super::networking::{AdsClientCommand, AdsClientToWs, AdsPacket, Client, ToPlcConn};
 use super::settings::PlcSetting;
+use super::types::{AdsType, AdsVersion};
 use actix::prelude::*;
 use actix_web::{ws, Error, HttpRequest, HttpResponse};
-use ads_types::{AdsType, AdsVersion};
 use chashmap::CHashMap;
-use json_diff::{merge, schema_parser, Schema};
-use networking::ToPlcConn;
-use networking::{AdsClientCommand, Client};
 use serde_json::{self, to_string, Value};
 use std::io;
 use std::sync::{Arc, RwLock};
 use std::time::Instant;
+
+use actix::AsyncContext;
+
+pub enum WsToAdsClient {
+    Register(Addr<Ws>),
+    Unregister(Addr<Ws>),
+}
+
+impl Message for WsToAdsClient {
+    type Result = ();
+}
 
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -46,10 +56,17 @@ pub struct WsState {
     pub sender: CHashMap<[u8; 8], Addr<Client>>,
 }
 
-#[derive(Debug)]
 pub struct Ws {
     plc_conn: [u8; 8],
     version: u32,
+    c: Option<Addr<Client>>,
+}
+
+impl Handler<AdsPacket> for Ws {
+    type Result = ();
+    fn handle(&mut self, m: AdsPacket, ctx: &mut Self::Context) -> Self::Result {
+        println!("ws: {:?}", m);
+    }
 }
 
 impl Ws {
@@ -68,7 +85,14 @@ impl Ws {
                 }
             }
         })?;
-        ws::start(&r, Ws { plc_conn, version })
+        ws::start(
+            &r,
+            Ws {
+                plc_conn,
+                version,
+                c: None,
+            },
+        )
     }
 }
 
@@ -89,7 +113,16 @@ impl Actor for Ws {
             ST_ADS_FROM_BC: init_st_ads_to_bc(version, &"ST_ADS_FROM_BC"),
             ST_RETAIN_DATA: init_st_ads_to_bc(version, &"ST_RETAIN_DATA"),
         };
+        let a = state.sender.get(&self.plc_conn).unwrap().clone();
+        a.do_send(WsToAdsClient::Register(ctx.address()));
+        self.c = Some(a);
         state.data.insert(self.plc_conn, mem);
+    }
+
+    fn stopped(&mut self, ctx: &mut Self::Context) {
+        if let Some(ref channel) = self.c {
+            channel.do_send(WsToAdsClient::Unregister(ctx.address()));
+        }
     }
 }
 
@@ -100,6 +133,8 @@ impl StreamHandler<ws::Message, ws::ProtocolError> for Ws {
         let mem = &mut *state.data.get_mut(&self.plc_conn).unwrap();
         let sender = &mut *state.sender.get_mut(&self.plc_conn).unwrap();
         //sender.do_send(AdsClientCommand::ReadToBc);
+        //sender.do_send(WsClient::Register(ctx.address()));
+        //ctx.address().do_send(AdsClientCommand::ReadToBc(10));
         match msg {
             ws::Message::Ping(msg) => ctx.pong(&msg),
             ws::Message::Text(text) => {
@@ -113,24 +148,29 @@ impl StreamHandler<ws::Message, ws::ProtocolError> for Ws {
                                     .into_iter()
                                     .filter_map(|param: (String, Value)| {
                                         let (k, data) = param;
-                                        if let Some(_key_guard) =
+                                        if let Some(key_guard) =
                                             version.search_index.get(&k.trim().to_string())
                                         {
-                                            //let value: &AdsType = &*version.map.get(&*key_guard).unwrap();
+                                            let ty: &AdsType = &*version.map.get(&*key_guard).unwrap();
                                             mem.update(k.trim(), data);
+                                            let mut data = Vec::with_capacity(ty.len() as usize);
+                                            let _ = ty.to_writer(
+                                                &mem.by_str(k.trim()),
+                                                &mut data,
+                                                &version.map,
+                                            );
                                             match k.trim() {
                                                 "ST_ADS_TO_BC" => {
-                                                    sender.do_send(AdsClientCommand::WriteToBc);
+                                                    sender
+                                                        .do_send(AdsClientCommand::WriteToBc(data));
                                                 }
                                                 "ST_RETAIN_DATA" => {
-                                                    sender.do_send(AdsClientCommand::WriteRetain);
+                                                    sender.do_send(AdsClientCommand::WriteRetain(
+                                                        data,
+                                                    ));
                                                 }
                                                 _ => unreachable!(),
                                             }
-                                            /*let mut m: &mut Value = mem.by_str(k.trim());
-                                            state
-                                                .data
-                                                .insert(self.plc_conn, merge(m.clone(), data));*/
                                         }
                                         None
                                     })
@@ -157,17 +197,19 @@ impl StreamHandler<ws::Message, ws::ProtocolError> for Ws {
                                                         .search_index
                                                         .get(&name.trim().to_string())
                                                     {
-                                                        Some(_key_guard) => {
-                                                            //let value: &AdsType = &*version.map.get(&*key_guard).unwrap();
+                                                        Some(key_guard) => {
+                                                            let ty: &AdsType = &*version.map.get(&*key_guard).unwrap();
                                                             let v = mem.by_str(name.trim());
                                                             match name.trim() {
                                                                 "ST_ADS_TO_BC" => {
                                                                     sender.do_send(
-                                                                        AdsClientCommand::ReadToBc,
+                                                                        AdsClientCommand::ReadToBc(
+                                                                            ty.len(),
+                                                                        ),
                                                                     );
                                                                 }
                                                                 "ST_RETAIN_DATA" => {
-                                                                    sender.do_send(AdsClientCommand::ReadRetain);
+                                                                    sender.do_send(AdsClientCommand::ReadRetain(ty.len()));
                                                                 }
                                                                 _ => unreachable!(),
                                                             }

@@ -1,13 +1,3 @@
-extern crate actix;
-extern crate ads_types;
-extern crate byteorder;
-extern crate bytes;
-pub extern crate futures;
-extern crate rand;
-extern crate tokio;
-extern crate tokio_codec;
-extern crate tokio_io;
-extern crate tokio_tcp;
 use actix::prelude::*;
 
 mod client;
@@ -22,9 +12,9 @@ use tokio_codec::FramedRead;
 use tokio_io::AsyncRead;
 use tokio_tcp::TcpStream;
 
-pub use client::*;
-pub use codec::types::*;
-pub use codec::*;
+pub use self::client::*;
+pub use self::codec::types::*;
+pub use self::codec::*;
 
 pub trait ToPlcConn {
     fn try_into_plc_conn(&self) -> Option<[u8; 8]>;
@@ -70,6 +60,7 @@ pub fn create_client<T: ToSocketAddrs>(
                     index_offset: idx_offs,
                     count: 0,
                     struct_map,
+                    ws_clients: vec![],
                 }
             }))
         })

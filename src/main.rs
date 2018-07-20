@@ -1,8 +1,16 @@
-/*extern crate byteorder;
-extern crate num_traits;
-extern crate quickxml_to_serde;
-extern crate serde;*/
+extern crate actix;
+extern crate byteorder;
+extern crate bytes;
+extern crate futures;
+extern crate rand;
 extern crate serde_json;
+#[macro_use]
+extern crate serde_derive;
+extern crate serde;
+extern crate tokio;
+extern crate tokio_codec;
+extern crate tokio_io;
+extern crate tokio_tcp;
 #[macro_use]
 extern crate clap;
 #[macro_use]
@@ -10,24 +18,22 @@ extern crate log;
 extern crate chrono;
 extern crate config;
 extern crate fern;
-
-//extern crate crossbeam;
-//extern crate crossbeam_channel as channel;
-
-extern crate actix;
+#[macro_use]
+extern crate nom;
 extern crate actix_web;
-
-extern crate ads_networking as networking;
-extern crate ads_types;
 extern crate chashmap;
-extern crate json_diff;
-extern crate settings;
-extern crate xml_to_struct;
+extern crate num_traits;
+extern crate quickxml_to_serde;
 
+mod json_diff;
+mod networking;
+mod settings;
+mod types;
 mod ws;
+mod xml_to_struct;
 
 use actix_web::{server, App, HttpRequest, Responder};
-use networking::futures::future::Future;
+use futures::future::Future;
 use networking::{AdsStructMap, ToPlcConn};
 use std::path::Path;
 use std::sync::{Arc, RwLock};
@@ -151,7 +157,6 @@ fn main() {
         data: chashmap::CHashMap::new(),
         sender: sender,
     });
-
     server::new(move || {
         App::with_state(ws_state.clone())
             .middleware(actix_web::middleware::Logger::default())
@@ -160,5 +165,6 @@ fn main() {
     }).bind("127.0.0.1:8000")
         .unwrap()
         .start();
+
     let _ = system.run();
 }

@@ -1,12 +1,7 @@
-extern crate ads_types as types;
-extern crate chashmap;
-extern crate quickxml_to_serde;
-extern crate serde_json;
-extern crate settings;
-
 mod helper;
 
 use chashmap::CHashMap;
+use quickxml_to_serde;
 use serde_json::Value;
 use settings::VersionSetting;
 use std::{

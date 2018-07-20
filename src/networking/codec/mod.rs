@@ -6,7 +6,7 @@ pub mod types;
 pub use self::types::*;
 use actix::Message;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum AdsPacket {
     WriteReq(AmsTcpHeader<types::AdsWriteReq>),
     WriteRes(AmsTcpHeader<types::AdsWriteRes>),
@@ -15,7 +15,7 @@ pub enum AdsPacket {
 }
 
 impl Message for AdsPacket {
-    type Result = Self;
+    type Result = ();
 }
 
 pub struct AdsClientCodec;

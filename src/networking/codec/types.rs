@@ -3,28 +3,28 @@ use byteorder::{LittleEndian, WriteBytesExt};
 use bytes::{Buf, IntoBuf};
 use std::io;
 
-pub trait AdsCommand: IntoBuf {
+pub trait AdsCommand: IntoBuf + Clone {
     type Result: AdsCommand;
     fn size(&self) -> usize;
     fn from_buf(src: &mut impl Buf) -> Self;
     fn gen_res(&self) -> Self::Result;
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AdsReadReq {
-    index_group: u32,
-    index_offset: u32,
-    length: u32,
+    pub index_group: u32,
+    pub index_offset: u32,
+    pub length: u32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AdsReadRes {
-    result: u32,
-    length: u32,
-    data: Vec<u8>,
+    pub result: u32,
+    pub length: u32,
+    pub data: Vec<u8>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AdsWriteReq {
     pub index_group: u32,
     pub index_offset: u32,
@@ -32,7 +32,7 @@ pub struct AdsWriteReq {
     pub data: Vec<u8>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AdsWriteRes {
     result: u32,
 }
