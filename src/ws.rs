@@ -1,10 +1,11 @@
 use super::settings::PlcSetting;
-use super::xml_to_struct::types::{AdsType, AdsVersion};
 use actix::prelude::*;
 use actix_web::{ws, Error, HttpRequest, HttpResponse};
+use ads_types::{AdsType, AdsVersion};
 use chashmap::CHashMap;
 use json_diff::{merge, schema_parser, Schema};
 use networking::ToPlcConn;
+use networking::{AdsClientCommand, Client};
 use serde_json::{self, to_string, Value};
 use std::io;
 use std::sync::{Arc, RwLock};
@@ -13,13 +14,13 @@ use std::time::Instant;
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct AdsMemory {
-    ST_ADS_TO_BC: Vec<u8>,
-    ST_ADS_FROM_BC: Vec<u8>,
-    ST_RETAIN_DATA: Vec<u8>,
+    ST_ADS_TO_BC: Value,
+    ST_ADS_FROM_BC: Value,
+    ST_RETAIN_DATA: Value,
 }
 
 impl AdsMemory {
-    pub fn by_str(&mut self, s: &str) -> &mut Vec<u8> {
+    pub fn by_str(&mut self, s: &str) -> &mut Value {
         match s.trim() {
             "ST_ADS_TO_BC" => &mut self.ST_ADS_TO_BC,
             "ST_ADS_FROM_BC" => &mut self.ST_ADS_FROM_BC,
@@ -27,13 +28,22 @@ impl AdsMemory {
             _ => unreachable!(),
         }
     }
+
+    pub fn update(&mut self, s: &str, v: Value) {
+        match s.trim() {
+            "ST_ADS_TO_BC" => self.ST_ADS_TO_BC = merge(self.ST_ADS_TO_BC.clone(), v),
+            "ST_ADS_FROM_BC" => self.ST_ADS_FROM_BC = merge(self.ST_ADS_FROM_BC.clone(), v),
+            "ST_RETAIN_DATA" => self.ST_RETAIN_DATA = merge(self.ST_RETAIN_DATA.clone(), v),
+            _ => unreachable!(),
+        }
+    }
 }
 
-#[derive(Debug)]
 pub struct WsState {
     pub map: CHashMap<u32, AdsVersion>,
     pub config: RwLock<Vec<PlcSetting>>,
     pub data: CHashMap<[u8; 8], AdsMemory>,
+    pub sender: CHashMap<[u8; 8], Addr<Client>>,
 }
 
 #[derive(Debug)]
@@ -58,26 +68,26 @@ impl Ws {
                 }
             }
         })?;
-        ws::start(r, Ws { plc_conn, version })
+        ws::start(&r, Ws { plc_conn, version })
     }
 }
 
-#[inline(always)]
-fn get_size_by_key<T: ToString>(version: &AdsVersion, k: &T) -> usize {
+fn init_st_ads_to_bc<T: ToString>(version: &AdsVersion, k: &T) -> Value {
     let key_guard: &String = &*version.search_index.get(&k.to_string()).unwrap();
-    let value = &*version.map.get(key_guard).unwrap();
-    value.len() as usize
+    let value: &AdsType = &*version.map.get(&*key_guard).unwrap();
+    value.as_data_struct(&mut &vec![0u8; value.len() as usize][..], &version.map)
 }
 
 impl Actor for Ws {
-    type Context = ws::WebsocketContext<Self, Arc<WsState>>;
+    type Context = ws::WebsocketContext<Ws, Arc<WsState>>;
     fn started(&mut self, ctx: &mut Self::Context) {
         let state: &WsState = ctx.state();
         let version: &AdsVersion = &*state.map.get(&self.version).expect("unknown version");
+
         let mem = AdsMemory {
-            ST_ADS_TO_BC: vec![0u8; get_size_by_key(version, &"ST_ADS_TO_BC")],
-            ST_ADS_FROM_BC: vec![0u8; get_size_by_key(version, &"ST_ADS_FROM_BC")],
-            ST_RETAIN_DATA: vec![0u8; get_size_by_key(version, &"ST_RETAIN_DATA")],
+            ST_ADS_TO_BC: init_st_ads_to_bc(version, &"ST_ADS_TO_BC"),
+            ST_ADS_FROM_BC: init_st_ads_to_bc(version, &"ST_ADS_FROM_BC"),
+            ST_RETAIN_DATA: init_st_ads_to_bc(version, &"ST_RETAIN_DATA"),
         };
         state.data.insert(self.plc_conn, mem);
     }
@@ -88,31 +98,39 @@ impl StreamHandler<ws::Message, ws::ProtocolError> for Ws {
         let state = ctx.state().clone();
         let version: &AdsVersion = &*state.map.get(&self.version).expect("unknown version");
         let mem = &mut *state.data.get_mut(&self.plc_conn).unwrap();
+        let sender = &mut *state.sender.get_mut(&self.plc_conn).unwrap();
+        //sender.do_send(AdsClientCommand::ReadToBc);
         match msg {
             ws::Message::Ping(msg) => ctx.pong(&msg),
             ws::Message::Text(text) => {
                 let t1 = Instant::now();
-
                 match text.chars().position(|e| e == ':') {
                     Some(_) => {
+                        //Mutation
                         if let Ok(mutation) = serde_json::from_str::<Value>(&text) {
                             if let Value::Object(obj) = mutation {
                                 let _: Vec<()> = obj
                                     .into_iter()
                                     .filter_map(|param: (String, Value)| {
                                         let (k, data) = param;
-                                        if let Some(key_guard) =
+                                        if let Some(_key_guard) =
                                             version.search_index.get(&k.trim().to_string())
                                         {
-                                            let value: &AdsType = &*version.map.get(&*key_guard).unwrap();
-                                            let mut m = mem.by_str(k.trim());
-                                            let v =
-                                                value.as_data_struct(&mut (&m[..]), &version.map);
-                                            let _ = value.to_writer(
-                                                &merge(v, data),
-                                                &mut m.as_mut_slice(),
-                                                &version.map,
-                                            );
+                                            //let value: &AdsType = &*version.map.get(&*key_guard).unwrap();
+                                            mem.update(k.trim(), data);
+                                            match k.trim() {
+                                                "ST_ADS_TO_BC" => {
+                                                    sender.do_send(AdsClientCommand::WriteToBc);
+                                                }
+                                                "ST_RETAIN_DATA" => {
+                                                    sender.do_send(AdsClientCommand::WriteRetain);
+                                                }
+                                                _ => unreachable!(),
+                                            }
+                                            /*let mut m: &mut Value = mem.by_str(k.trim());
+                                            state
+                                                .data
+                                                .insert(self.plc_conn, merge(m.clone(), data));*/
                                         }
                                         None
                                     })
@@ -121,6 +139,7 @@ impl StreamHandler<ws::Message, ws::ProtocolError> for Ws {
                         }
                     }
                     None => {
+                        // GET
                         let schema = schema_parser(&text).unwrap();
                         if let Schema::Root(v) = &schema {
                             ctx.text(
@@ -138,13 +157,21 @@ impl StreamHandler<ws::Message, ws::ProtocolError> for Ws {
                                                         .search_index
                                                         .get(&name.trim().to_string())
                                                     {
-                                                        Some(key_guard) => {
-                                                            let value: &AdsType = &*version.map.get(&*key_guard).unwrap();
-                                                            let v = value.as_data_struct(
-                                                                &mut (&mem.by_str(name.trim())[..]),
-                                                                &version.map,
-                                                            );
-                                                            Some((name.to_string(), v))
+                                                        Some(_key_guard) => {
+                                                            //let value: &AdsType = &*version.map.get(&*key_guard).unwrap();
+                                                            let v = mem.by_str(name.trim());
+                                                            match name.trim() {
+                                                                "ST_ADS_TO_BC" => {
+                                                                    sender.do_send(
+                                                                        AdsClientCommand::ReadToBc,
+                                                                    );
+                                                                }
+                                                                "ST_RETAIN_DATA" => {
+                                                                    sender.do_send(AdsClientCommand::ReadRetain);
+                                                                }
+                                                                _ => unreachable!(),
+                                                            }
+                                                            Some((name.to_string(), v.clone()))
                                                         }
                                                         None => None,
                                                     }

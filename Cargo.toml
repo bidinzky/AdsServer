@@ -5,26 +5,24 @@ authors = ["binder-lukas <binder.lukas@outlook.com>"]
 
 [dependencies]
 clap = "*"
-serde_derive = "*"
-serde = "*"
+#serde = "*"
 serde_json = "*"
-byteorder = "*"
-bytes = "*"
-num-traits = "*"
-quickxml_to_serde = "*"
+#byteorder = "*"
+#num-traits = "*"
+#quickxml_to_serde = "*"
 log = "*"
 fern = "*"
 chrono = "*"
 config = "*"
-crossbeam = "*"
-crossbeam-channel = "*"
-tokio = "*"
-tokio-codec = "*"
-tokio-io = "*"
-tokio-tcp = "*"#futures = "^0.1"
-rand = "*"
-actix = "*"
-actix-web = "*"
-chashmap = "*"
-bus = "*"
-nom = "*"
+#crossbeam = "*"
+#crossbeam-channel = "*"
+actix = "0.7"
+actix-web = { git = "https://github.com/actix/actix-web.git" }
+chashmap = "2.2.0"
+#bus = "*"
+#nom = "*"
+ads_networking = { path = "./ads_networking" }
+ads_types = { path = "./ads_types" }
+json_diff = { path = "./json_diff" }
+settings = { path = "./settings" }
+xml_to_struct = { path = "./xml_to_struct" }

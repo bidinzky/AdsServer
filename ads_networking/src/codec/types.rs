@@ -182,8 +182,8 @@ pub struct AmsHeader<T>
 where
     T: AdsCommand,
 {
-    pub target: Vec<u8>,
-    pub source: Vec<u8>,
+    pub target: [u8; 8],
+    pub source: [u8; 8],
     pub command_id: u16,
     pub state_flags: u16,
     pub inv_id: u32,
@@ -192,6 +192,14 @@ where
 
 fn get_vec(s: &mut impl Buf, size: usize) -> Vec<u8> {
     (0..size).map(|_| s.get_u8()).collect()
+}
+
+fn get_ams_conn(s: &mut impl Buf) -> [u8; 8] {
+    let mut d = [0u8; 8];
+    for i in &mut d.iter_mut() {
+        *i = s.get_u8();
+    }
+    d
 }
 
 impl<T> AdsCommand for AmsHeader<T>
@@ -205,8 +213,8 @@ where
 
     fn from_buf(r: &mut impl Buf) -> Self {
         AmsHeader {
-            target: get_vec(r, 8),
-            source: get_vec(r, 8),
+            target: get_ams_conn(r),
+            source: get_ams_conn(r),
             command_id: r.get_u16_le(),
             state_flags: r.get_u16_le(),
             inv_id: {
@@ -221,8 +229,8 @@ where
     fn gen_res(&self) -> Self::Result {
         let data_res = self.data.gen_res();
         AmsHeader {
-            target: self.source.clone(),
-            source: self.target.clone(),
+            target: self.source,
+            source: self.target,
             command_id: self.command_id,
             state_flags: 5, //gen result from request isnt possible
             inv_id: self.inv_id,
@@ -237,7 +245,7 @@ where
 {
     type Buf = io::Cursor<Vec<u8>>;
 
-    fn into_buf(mut self) -> Self::Buf {
+    fn into_buf(self) -> Self::Buf {
         let mut v = Vec::with_capacity(16 + self.data.size());
         let _ = v.write_u16::<LittleEndian>(self.command_id);
         let _ = v.write_u16::<LittleEndian>(self.state_flags);
@@ -246,9 +254,11 @@ where
         let _ = v.write_u32::<LittleEndian>(self.inv_id);
         let h: Vec<_> = self.data.into_buf().collect();
         v.extend(h);
-        self.target.extend(self.source);
-        self.target.extend(v);
-        io::Cursor::new(self.target)
+        let mut data = Vec::with_capacity(16 + v.len());
+        data.extend_from_slice(&self.target[..]);
+        data.extend_from_slice(&self.source[..]);
+        data.extend(v);
+        io::Cursor::new(data)
     }
 }
 

@@ -1,0 +1,9 @@
+[package]
+name = "settings"
+version = "0.1.0"
+authors = ["binder-lukas <binder.lukas@outlook.com>"]
+
+[dependencies]
+ads_networking = { path = "../ads_networking" }
+serde_derive = "*"
+serde = "*"

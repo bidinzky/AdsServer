@@ -1,7 +1,14 @@
-use super::helper::{number_from_value, read_ads_number, type_from_value, write_ads_number};
-use super::Value;
+extern crate byteorder;
+extern crate chashmap;
+extern crate num_traits;
+extern crate serde_json;
+
+pub mod helper;
+
+use self::helper::{number_from_value, read_ads_number, type_from_value, write_ads_number};
 use byteorder::{ReadBytesExt, WriteBytesExt};
 use chashmap::CHashMap;
+use serde_json::Value;
 use std::collections::HashMap;
 use std::io;
 
@@ -12,7 +19,7 @@ pub struct AdsVersion {
     pub search_index: CHashMap<String, String>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Symbol {
     pub index_group: u32,
     pub index_offset: u32,
@@ -20,7 +27,7 @@ pub struct Symbol {
     pub ty: AdsPlcType,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Name {
     pub text: String,
     pub decoration: Option<String>,
@@ -165,6 +172,7 @@ impl AdsPlcType {
     }
 }
 
+#[cfg_attr(feature = "cargo-clippy", allow(len_without_is_empty))]
 impl AdsType {
     pub fn to_writer<W: WriteBytesExt>(
         &self,

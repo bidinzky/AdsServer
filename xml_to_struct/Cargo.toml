@@ -1,0 +1,11 @@
+[package]
+name = "xml_to_struct"
+version = "0.1.0"
+authors = ["binder-lukas <binder.lukas@outlook.com>"]
+
+[dependencies]
+chashmap = "*"
+serde_json = "*"
+quickxml_to_serde = "*"
+settings = { path = "../settings" }
+ads_types = { path = "../ads_types" }

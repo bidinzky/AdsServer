@@ -1,16 +1,23 @@
-mod helper;
-pub mod types;
+extern crate ads_types as types;
+extern crate chashmap;
+extern crate quickxml_to_serde;
+extern crate serde_json;
+extern crate settings;
 
-use super::settings::VersionSetting;
+mod helper;
+
 use chashmap::CHashMap;
 use serde_json::Value;
+use settings::VersionSetting;
 use std::{
-    collections::HashMap, fs::File, io::{BufRead, BufReader},
+    collections::HashMap,
+    fs::File,
+    io::{BufRead, BufReader},
 };
 
-use self::helper::{build_dependencies, number_from_value, type_from_value};
-use self::types::{AdsPlcType, AdsType, AdsVersion, Name, Symbol};
-use quickxml_to_serde;
+use self::helper::build_dependencies;
+use types::helper::{number_from_value, type_from_value};
+use types::{AdsPlcType, AdsType, AdsVersion, Name, Symbol};
 
 fn xml_to_json<R: BufRead>(r: R) -> Value {
     let e = quickxml_to_serde::get_root(r).unwrap();
@@ -65,10 +72,10 @@ pub fn read_tpy(conf: &VersionSetting) -> AdsVersion {
         .iter()
         .filter_map(|(k, v)| match v {
             AdsType::Struct { name, .. } => if search_vec.contains(&name.as_ref()) {
-                None
-            } else {
                 search_index.insert(name.to_string(), k.to_string());
                 Some(k)
+            } else {
+                None
             },
             _ => None,
         })

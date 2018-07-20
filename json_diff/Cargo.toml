@@ -1,0 +1,8 @@
+[package]
+name = "json_diff"
+version = "0.1.0"
+authors = ["binder-lukas <binder.lukas@outlook.com>"]
+
+[dependencies]
+nom = "*"
+serde_json = "*"

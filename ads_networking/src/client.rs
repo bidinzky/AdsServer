@@ -1,5 +1,6 @@
 use super::codec::{self, types::AdsCommand};
 use actix::prelude::*;
+use ads_types::Symbol;
 use byteorder::{ByteOrder, LittleEndian};
 use rand::{self, Rng};
 use std::io;
@@ -7,13 +8,19 @@ use std::time::Duration;
 use tokio_io::io::WriteHalf;
 use tokio_tcp::TcpStream;
 
+#[derive(Debug)]
+pub struct AdsStructMap {
+	pub st_ads_to_bc: Symbol,
+	pub st_retain_data: Symbol,
+}
+
 pub struct AdsClient {
 	pub framed: actix::io::FramedWrite<WriteHalf<TcpStream>, codec::AdsClientCodec>,
-	pub source: Vec<u8>,
-	pub target: Vec<u8>,
-	pub index_group: u32,
+	pub source: [u8; 8],
+	pub target: [u8; 8],
 	pub index_offset: u32,
 	pub count: u32,
+	pub struct_map: AdsStructMap,
 }
 
 #[derive(Debug)]
@@ -32,7 +39,12 @@ impl Actor for AdsClient {
 	type Context = Context<Self>;
 
 	fn started(&mut self, ctx: &mut Self::Context) {
+		println!("ads_client started");
 		self.hb(ctx);
+	}
+
+	fn stopped(&mut self, _: &mut Self::Context) {
+		println!("stopped");
 	}
 }
 
@@ -45,13 +57,13 @@ impl AdsClient {
 		let wr = codec::AmsTcpHeader {
 			length: 32 + 12 + 4,
 			header: codec::AmsHeader {
-				source: self.source.clone(),
-				target: self.target.clone(),
+				source: self.source,
+				target: self.target,
 				command_id: 3,
 				inv_id: rand::thread_rng().gen(),
 				state_flags: 4,
 				data: codec::AdsWriteReq {
-					index_group: self.index_group,
+					index_group: self.struct_map.st_ads_to_bc.index_group,
 					index_offset: self.index_offset,
 					length: 4,
 					data: d,
@@ -71,13 +83,13 @@ impl Handler<AdsClientCommand> for AdsClient {
 	type Result = ();
 
 	fn handle(&mut self, msg: AdsClientCommand, ctx: &mut Context<Self>) {
-		println!("write_handle: {:?} {:?}", msg, ctx.state());
+		println!("h: {:?} {:?}", msg, ctx.state());
 	}
 }
 
 impl StreamHandler<codec::AdsPacket, io::Error> for AdsClient {
 	fn handle(&mut self, msg: codec::AdsPacket, _: &mut Context<Self>) {
-		use codec::AdsPacket::*;
+		use super::codec::AdsPacket::*;
 		match msg {
 			ReadReq(r) => {
 				println!("read_req: {:?}", r);

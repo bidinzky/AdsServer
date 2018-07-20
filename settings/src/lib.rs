@@ -1,6 +1,11 @@
+extern crate ads_networking as networking;
+extern crate serde;
+#[macro_use]
+extern crate serde_derive;
+
 mod map_deserialize;
 use self::map_deserialize::N;
-use super::networking::ToPlcConn;
+use networking::ToPlcConn;
 use std::collections::BTreeMap;
 
 #[derive(Debug, Deserialize, Serialize)]

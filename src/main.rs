@@ -1,10 +1,8 @@
-extern crate byteorder;
+/*extern crate byteorder;
 extern crate num_traits;
 extern crate quickxml_to_serde;
+extern crate serde;*/
 extern crate serde_json;
-#[macro_use]
-extern crate serde_derive;
-extern crate serde;
 #[macro_use]
 extern crate clap;
 #[macro_use]
@@ -12,47 +10,25 @@ extern crate log;
 extern crate chrono;
 extern crate config;
 extern crate fern;
-#[macro_use(
-    take_until,
-    named,
-    separated_list,
-    tag,
-    alt,
-    take,
-    ws,
-    call,
-    error_position,
-    sep,
-    wrap_sep
-)]
-extern crate nom;
 
-extern crate crossbeam;
-extern crate crossbeam_channel as channel;
-extern crate rand;
-
-extern crate bytes;
-extern crate tokio;
-extern crate tokio_io;
-extern crate tokio_tcp;
-
-extern crate tokio_codec;
+//extern crate crossbeam;
+//extern crate crossbeam_channel as channel;
 
 extern crate actix;
 extern crate actix_web;
 
+extern crate ads_networking as networking;
+extern crate ads_types;
 extern crate chashmap;
+extern crate json_diff;
+extern crate settings;
+extern crate xml_to_struct;
 
-extern crate bus;
-
-mod json_diff;
-mod networking;
-mod settings;
 mod ws;
-mod xml_to_struct;
 
 use actix_web::{server, App, HttpRequest, Responder};
-//use networking::SimpleSocket;
+use networking::futures::future::Future;
+use networking::{AdsStructMap, ToPlcConn};
 use std::path::Path;
 use std::sync::{Arc, RwLock};
 
@@ -68,6 +44,8 @@ fn index(info: HttpRequest<Arc<ws::WsState>>) -> impl Responder {
 }
 
 fn main() {
+    let system = actix::System::new("adsserver");
+
     let matches: clap::ArgMatches = clap_app!(adsserver =>
         (version: "1.0")
         (author: "Lukas Binder")
@@ -126,26 +104,54 @@ fn main() {
             }
         })
         .collect();
-    /*let v: chashmap::CHashMap<_, _> = config
+    //Vec<actix::Addr<actix::Syn, networking::Client>>
+    let sender: chashmap::CHashMap<_, _> = config
         .plc
         .iter()
-        .filter_map(|plc| {
-            match SimpleSocket::new(
-                &(plc.ip.as_str(),48898),
-                &(plc.ams_net_id.clone(), plc.ams_port),
-                &config.connection_parameter,
-            ) {
-                Ok(s) => Some((plc.version, s)),
-                Err(_) => None
-            }
+        .map(|plc| {
+            use std::net::ToSocketAddrs;
+            let version = &*sps_types.get(&plc.version).expect("unknown version");
+            let mkey = version
+                .search_index
+                .get(&"ST_ADS_TO_BC".to_string())
+                .unwrap();
+            let rkey = version
+                .search_index
+                .get(&"ST_RETAIN_DATA".to_string())
+                .unwrap();
+
+            let m = AdsStructMap {
+                st_ads_to_bc: version.symbols.get(&*mkey).unwrap().clone(),
+                st_retain_data: version.symbols.get(&*rkey).unwrap().clone(),
+            };
+            let addr = (&(plc.ip.as_str(), 48898))
+                .to_socket_addrs()
+                .unwrap()
+                .next()
+                .unwrap();
+            let c = (&(plc.ams_net_id.clone(), plc.ams_port))
+                .try_into_plc_conn()
+                .unwrap();
+            (
+                c,
+                networking::create_client(
+                    addr,
+                    &(plc.ams_net_id.clone(), plc.ams_port),
+                    &("172.16.21.2.1.1", 801),
+                    0,
+                    m,
+                ).wait()
+                    .unwrap(),
+            )
         })
         .collect();
-    println!("{:?}", v);*/
     let ws_state = Arc::new(ws::WsState {
         map: sps_types,
         config: RwLock::new(config.plc),
         data: chashmap::CHashMap::new(),
+        sender: sender,
     });
+
     server::new(move || {
         App::with_state(ws_state.clone())
             .middleware(actix_web::middleware::Logger::default())
@@ -153,5 +159,6 @@ fn main() {
             .resource("/", |r| r.with(index))
     }).bind("127.0.0.1:8000")
         .unwrap()
-        .run();
+        .start();
+    let _ = system.run();
 }
