@@ -17,7 +17,7 @@ pub struct AmsConn {
 }
 
 impl ToPlcConn for AmsConn {
-    fn try_into_plc_conn(&self) -> Option<[u8; 8]> {
+    fn as_plc_conn(&self) -> [u8; 8] {
         let net_id: Vec<_> = self
             .ams_net_id
             .split('.')
@@ -27,7 +27,7 @@ impl ToPlcConn for AmsConn {
         d[..6].clone_from_slice(&net_id[..6]);
         d[7] = ((self.ams_port >> 8) & 0xff) as u8;
         d[6] = (self.ams_port & 0xff) as u8;
-        Some(d)
+        d
     }
 }
 

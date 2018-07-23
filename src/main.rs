@@ -22,6 +22,7 @@ extern crate fern;
 extern crate nom;
 extern crate actix_web;
 extern crate chashmap;
+extern crate indextree;
 extern crate num_traits;
 extern crate quickxml_to_serde;
 
@@ -30,13 +31,16 @@ mod networking;
 mod settings;
 mod types;
 mod ws;
+mod ws_ads;
 mod xml_to_struct;
 
+use actix::Actor;
 use actix_web::{server, App, HttpRequest, Responder};
 use futures::future::Future;
-use networking::{AdsStructMap, ToPlcConn};
+use networking::ToPlcConn;
 use std::path::Path;
 use std::sync::{Arc, RwLock};
+use ws_ads::AdsStructMap;
 
 #[inline(always)]
 fn file_exists<T: AsRef<Path>>(path: T) -> bool {
@@ -46,7 +50,15 @@ fn file_exists<T: AsRef<Path>>(path: T) -> bool {
 #[inline(always)]
 #[cfg_attr(feature = "cargo-clippy", allow(needless_pass_by_value))]
 fn index(info: HttpRequest<Arc<ws::WsState>>) -> impl Responder {
-    serde_json::to_string_pretty(&*info.state().config.read().unwrap())
+    serde_json::to_string_pretty(&*info.state().config())
+}
+
+fn init_st_ads_to_bc<T: ToString>(version: &types::AdsVersion, k: &T) -> ws_ads::AdsMemoryValue {
+    let key_guard: &String = &*version.search_index.get(&k.to_string()).unwrap();
+    let value: &types::AdsType = &*version.map.get(&*key_guard).unwrap();
+    let v = vec![0u8; value.len() as usize];
+    let data = value.as_data_struct(&mut &v[..], &version.map);
+    ws_ads::AdsMemoryValue { data, vec: v }
 }
 
 fn main() {
@@ -103,19 +115,17 @@ fn main() {
             let p: &Path = version.1.path.as_ref();
             if file_exists(&p) {
                 let u: u32 = version.0.into();
-                Some((u, xml_to_struct::read_tpy(version.1)))
+                Some((u, Arc::new(xml_to_struct::read_tpy(version.1))))
             } else {
                 error!("version file {:?} does not exist", p);
                 None
             }
         })
         .collect();
-    //Vec<actix::Addr<actix::Syn, networking::Client>>
-    let sender: chashmap::CHashMap<_, _> = config
+    /*let sender: chashmap::CHashMap<_, _> = config
         .plc
         .iter()
-        .map(|plc| {
-            use std::net::ToSocketAddrs;
+        .map(move |plc| {
             let version = &*sps_types.get(&plc.version).expect("unknown version");
             let mkey = version
                 .search_index
@@ -130,33 +140,26 @@ fn main() {
                 st_ads_to_bc: version.symbols.get(&*mkey).unwrap().clone(),
                 st_retain_data: version.symbols.get(&*rkey).unwrap().clone(),
             };
-            let addr = (&(plc.ip.as_str(), 48898))
-                .to_socket_addrs()
-                .unwrap()
-                .next()
-                .unwrap();
-            let c = (&(plc.ams_net_id.clone(), plc.ams_port))
-                .try_into_plc_conn()
+            let mem = ws_ads::AdsMemory {
+                ST_ADS_TO_BC: init_st_ads_to_bc(&version, &"ST_ADS_TO_BC"),
+                ST_ADS_FROM_BC: init_st_ads_to_bc(&version, &"ST_ADS_FROM_BC"),
+                ST_RETAIN_DATA: init_st_ads_to_bc(&version, &"ST_RETAIN_DATA"),
+            };
+            let conn = (plc.ams_net_id.clone(), plc.ams_port).as_plc_conn();
+            let client_addr = networking::create_client(
+                (plc.ip.as_str(), 48898),
+                &conn,
+                &("172.16.21.2.1.1", 801),
+            ).wait()
                 .unwrap();
             (
-                c,
-                networking::create_client(
-                    addr,
-                    &(plc.ams_net_id.clone(), plc.ams_port),
-                    &("172.16.21.2.1.1", 801),
-                    0,
-                    m,
-                ).wait()
-                    .unwrap(),
+                conn,
+                ws_ads::AdsToWsMultiplexer::new(client_addr, mem, version.clone(), m).start(),
             )
         })
         .collect();
-    let ws_state = Arc::new(ws::WsState {
-        map: sps_types,
-        config: RwLock::new(config.plc),
-        data: chashmap::CHashMap::new(),
-        sender: sender,
-    });
+    let ws_state = Arc::new(ws::WsState::new(RwLock::new(config.plc), sender));
+
     server::new(move || {
         App::with_state(ws_state.clone())
             .middleware(actix_web::middleware::Logger::default())
@@ -166,5 +169,5 @@ fn main() {
         .unwrap()
         .start();
 
-    let _ = system.run();
+    let _ = system.run();*/
 }

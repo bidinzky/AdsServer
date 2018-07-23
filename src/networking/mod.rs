@@ -17,14 +17,14 @@ pub use self::codec::types::*;
 pub use self::codec::*;
 
 pub trait ToPlcConn {
-    fn try_into_plc_conn(&self) -> Option<[u8; 8]>;
+    fn as_plc_conn(&self) -> [u8; 8];
 }
 
 impl<T> ToPlcConn for (T, u16)
 where
     T: AsRef<str>,
 {
-    fn try_into_plc_conn(&self) -> Option<[u8; 8]> {
+    fn as_plc_conn(&self) -> [u8; 8] {
         let net_id: Vec<_> = self
             .0
             .as_ref()
@@ -35,7 +35,13 @@ where
         d[..6].clone_from_slice(&net_id[..6]);
         d[7] = ((self.1 >> 8) & 0xff) as u8;
         d[6] = (self.1 & 0xff) as u8;
-        Some(d)
+        d
+    }
+}
+
+impl ToPlcConn for [u8; 8] {
+    fn as_plc_conn(&self) -> [u8; 8] {
+        *self
     }
 }
 
@@ -43,11 +49,9 @@ pub fn create_client<T: ToSocketAddrs>(
     addr: T,
     target: &impl ToPlcConn,
     source: &impl ToPlcConn,
-    idx_offs: u32,
-    struct_map: AdsStructMap,
 ) -> impl Future<Item = Addr<Client>, Error = ()> {
-    let target = target.try_into_plc_conn().expect("expected plc conn");
-    let source = source.try_into_plc_conn().expect("expected plc conn");
+    let target = target.as_plc_conn();
+    let source = source.as_plc_conn();
     TcpStream::connect(&addr.to_socket_addrs().unwrap().next().unwrap())
         .and_then(move |stream| {
             future::ok(Client::create(move |ctx| {
@@ -57,10 +61,6 @@ pub fn create_client<T: ToSocketAddrs>(
                     framed: actix::io::FramedWrite::new(w, codec::AdsClientCodec, ctx),
                     target,
                     source,
-                    index_offset: idx_offs,
-                    count: 0,
-                    struct_map,
-                    ws_clients: vec![],
                 }
             }))
         })

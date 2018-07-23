@@ -338,9 +338,9 @@ impl AdsType {
                 AdsPlcType::LReal => 8,
                 _ => 4,
             },
-            AdsType::Array { bit_size, .. } => *bit_size,
-            AdsType::Struct { bit_size, .. } => *bit_size,
-            AdsType::Enum { bit_size, .. } => *bit_size,
+            AdsType::Array { bit_size, .. } => *bit_size / 8,
+            AdsType::Struct { bit_size, .. } => *bit_size / 8,
+            AdsType::Enum { bit_size, .. } => *bit_size / 8,
         }
     }
 }

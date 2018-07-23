@@ -17,11 +17,19 @@ pub struct AdsReadReq {
     pub length: u32,
 }
 
+impl Message for AdsReadReq {
+    type Result = ();
+}
+
 #[derive(Debug, Clone)]
 pub struct AdsReadRes {
     pub result: u32,
     pub length: u32,
     pub data: Vec<u8>,
+}
+
+impl Message for AdsReadRes {
+    type Result = ();
 }
 
 #[derive(Debug, Clone)]
@@ -32,9 +40,17 @@ pub struct AdsWriteReq {
     pub data: Vec<u8>,
 }
 
+impl Message for AdsWriteReq {
+    type Result = ();
+}
+
 #[derive(Debug, Clone)]
 pub struct AdsWriteRes {
     result: u32,
+}
+
+impl Message for AdsWriteRes {
+    type Result = ();
 }
 
 impl AdsCommand for AdsWriteRes {
@@ -304,9 +320,9 @@ where
     }
 }
 
-impl<T> Message for AmsTcpHeader<T>
+/*impl<T> Message for AmsTcpHeader<T>
 where
     T: AdsCommand,
 {
     type Result = ();
-}
+}*/

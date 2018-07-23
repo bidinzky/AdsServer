@@ -2,13 +2,17 @@ use nom::{self, types::CompleteStr as Input, IResult};
 use serde_json::Value;
 
 #[derive(Debug)]
-pub enum Schema<'a> {
-    Tag(&'a str),
-    Obj(&'a str, Vec<Schema<'a>>),
-    Root(Vec<Schema<'a>>),
+pub enum Schema {
+    Tag(String),
+    Obj(String, Vec<Schema>),
+    Root(Vec<Schema>),
 }
 
-impl<'a> ToString for Schema<'a> {
+/*impl<'a> ToOwned for Schema<'a> {
+    type Owned: 
+}*/
+
+impl ToString for Schema {
     fn to_string(&self) -> String {
         match self {
             Schema::Tag(n) => n.trim().to_string(),
@@ -34,7 +38,7 @@ fn value_tag_parser(c: Input) -> IResult<Input, Schema> {
         } else {
             ("".into(), c)
         };
-        Ok((i, Schema::Tag(&o)))
+        Ok((i, Schema::Tag(o.to_string())))
     } else {
         Err(nom::Err::Error(nom::Context::Code(c, nom::ErrorKind::Tag)))
     }
@@ -43,7 +47,7 @@ fn value_tag_parser(c: Input) -> IResult<Input, Schema> {
 fn value_obj_parser(c: Input) -> IResult<Input, Schema> {
     let (c, n) = take_until!(c, "{")?;
     match obj_parser(c) {
-        Ok((c, Schema::Root(d))) => Ok((c, Schema::Obj(&n.trim(), d))),
+        Ok((c, Schema::Root(d))) => Ok((c, Schema::Obj(n.trim().to_string(), d))),
         _ => Err(nom::Err::Error(nom::Context::Code(
             c,
             nom::ErrorKind::Custom(line!()),
@@ -85,12 +89,12 @@ fn obj_parser(i: Input) -> IResult<Input, Schema> {
 }
 
 #[inline(always)]
-pub fn schema_parser<'a>(i: &'a str) -> Result<Schema<'a>, nom::Err<Input>> {
+pub fn schema_parser(i: &str) -> Result<Schema, nom::Err<Input>> {
     let (_, v) = ws!(Input(i), obj_parser)?;
     Ok(v)
 }
 
-impl<'a> Schema<'a> {
+impl Schema {
     pub fn as_schema(&self, v: &Value) -> Option<Value> {
         match self {
             Schema::Tag(k) => match v.get(k.trim()) {
