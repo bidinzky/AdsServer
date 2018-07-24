@@ -1,7 +1,11 @@
-use actix::Message;
+use actix::dev::{MessageResponse, ResponseChannel};
+use actix::{Actor, Message};
 use byteorder::{LittleEndian, WriteBytesExt};
 use bytes::{Buf, IntoBuf};
+use futures::{Future, Poll};
 use std::io;
+use std::sync::mpsc::{Receiver, Sender};
+//use super::super::client::ReturnFuture;
 
 pub trait AdsCommand: IntoBuf + Clone {
     type Result: AdsCommand;
@@ -18,7 +22,7 @@ pub struct AdsReadReq {
 }
 
 impl Message for AdsReadReq {
-    type Result = ();
+    type Result = Result<AdsReadRes, ()>;
 }
 
 #[derive(Debug, Clone)]
@@ -31,6 +35,18 @@ pub struct AdsReadRes {
 impl Message for AdsReadRes {
     type Result = ();
 }
+
+/*impl<A, M> MessageResponse<A, M> for Box<Future<Error = (), Item = AdsReadRes> + 'static>
+where
+    A: Actor,
+    M: Message<Result = AdsReadRes>,
+{
+    fn handle<R: ResponseChannel<M>>(self, ctx: &mut A::Context, tx: Option<R>) {
+        if let Some(tx) = tx {
+            tx.send(self);
+        }
+    }
+}*/
 
 #[derive(Debug, Clone)]
 pub struct AdsWriteReq {
@@ -322,7 +338,8 @@ where
 
 /*impl<T> Message for AmsTcpHeader<T>
 where
-    T: AdsCommand,
+    T: AdsCommand + 'static,
 {
-    type Result = ();
+    type Result = AmsTcpHeader<<T as AdsCommand>::Result>;
+
 }*/

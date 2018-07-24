@@ -5,29 +5,16 @@ use quickxml_to_serde;
 use serde_json::Value;
 use settings::VersionSetting;
 use std::{
-    collections::HashMap,
-    fs::File,
-    io::{BufRead, BufReader},
+    collections::HashMap, fs::File, io::{BufRead, BufReader},
 };
 
 use self::helper::build_dependencies;
-use indextree::Arena;
 use types::helper::{number_from_value, type_from_value};
 use types::{AdsPlcType, AdsType, AdsVersion, Name, Symbol};
 
 fn xml_to_json<R: BufRead>(r: R) -> Value {
     let e = quickxml_to_serde::get_root(r).unwrap();
     quickxml_to_serde::xml_to_map(&e)
-}
-
-fn test(map: CHashMap<String, AdsType>, search_index: CHashMap<String, String>) {
-    let arena = &mut Arena::new();
-    for (k, v) in map.into_iter() {
-        println!("===\nworking on {}", k);
-        //let ty = map.remove(&v).unwrap();
-        let k = arena.new_node(v);
-        println!("{:?}\n===", k);
-    }
 }
 
 pub fn read_tpy(conf: &VersionSetting) -> AdsVersion {
@@ -95,11 +82,10 @@ pub fn read_tpy(conf: &VersionSetting) -> AdsVersion {
         .into_iter()
         .filter_map(|(k, v)| if dep.contains(&k) { Some((k, v)) } else { None })
         .collect();
-    test(fmap, search_index);
-    /*AdsVersion {
+
+    AdsVersion {
         map: fmap,
         search_index,
         symbols,
-    }*/
-    panic!();
+    }
 }

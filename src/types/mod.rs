@@ -5,6 +5,7 @@ use byteorder::{ReadBytesExt, WriteBytesExt};
 use chashmap::CHashMap;
 use serde_json::Value;
 use std::collections::HashMap;
+use std::ffi::CString;
 use std::io;
 
 #[derive(Debug)]
@@ -72,7 +73,7 @@ pub enum AdsType {
         properties: Vec<AdsStructProperties>,
     },
     Array {
-        bounds: Vec<(usize, usize)>,
+        bounds: usize,
         bit_size: u32,
         ty: AdsPlcType,
     },
@@ -157,7 +158,13 @@ impl AdsPlcType {
             AdsPlcType::String(ref len) => {
                 let mut b = vec![0u8; *len];
                 let _ = r.read_exact(&mut b);
-                Value::String(String::from_utf8(b).unwrap())
+                let i = b.iter().position(|&x| x == 0).unwrap_or(*len);
+                if i > 0 {
+                    let s = CString::new(&b[..i]).expect("nullerror");
+                    Value::String(s.into_string().expect("invalid utf8"))
+                } else {
+                    Value::String("".to_string())
+                }
             }
             AdsPlcType::Other { ref reference, .. } => map
                 .get(&reference.trim().to_string())
@@ -196,16 +203,9 @@ impl AdsType {
                     _ => acc,
                 })
             }
-            AdsType::Array { ty, bounds, .. } => {
-                let l = bounds.iter().fold(1, |acc, v| {
-                    if v.1 > v.0 {
-                        acc * (v.1 - v.0)
-                    } else {
-                        acc * (v.0 - v.1)
-                    }
-                });
-                (0..l).map(|i| ty.to_writer(&data[i], w, map)).collect()
-            }
+            AdsType::Array { ty, bounds, .. } => (0..*bounds)
+                .map(|i| ty.to_writer(&data[i], w, map))
+                .collect(),
             AdsType::Primitive(ref ty) => ty.to_writer(data, w, map),
         }
     }
@@ -225,16 +225,7 @@ impl AdsType {
             ),
             AdsType::Array {
                 ref ty, ref bounds, ..
-            } => {
-                let l = bounds.iter().fold(1, |acc, v| {
-                    if v.1 > v.0 {
-                        acc * (v.1 - v.0)
-                    } else {
-                        acc * (v.0 - v.1)
-                    }
-                });
-                (0..l).map(|_| ty.as_data_struct(r, map)).collect()
-            }
+            } => (0..*bounds).map(|_| ty.as_data_struct(r, map)).collect(),
             AdsType::Primitive(ref ty) => ty.as_data_struct(r, map),
         }
     }
@@ -293,16 +284,12 @@ impl AdsType {
                         _ => unreachable!(),
                     };
                     Some(AdsType::Array {
-                        bounds: array_info
-                            .iter()
-                            .map(|f| match f {
-                                Value::Object(ref o) => (
-                                    o["Elements"].as_f64().unwrap() as usize,
-                                    o["LBound"].as_f64().unwrap() as usize,
-                                ),
-                                _ => unreachable!(),
-                            })
-                            .collect(),
+                        bounds: array_info.iter().fold(1, |acc, f| match f {
+                            Value::Object(ref o) => {
+                                acc * (o["Elements"].as_f64().unwrap() as usize)
+                            }
+                            _ => acc,
+                        }),
                         ty: type_from_value(&obj["Type"], None),
                         bit_size,
                     })

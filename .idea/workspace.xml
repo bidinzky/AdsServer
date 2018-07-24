@@ -10,22 +10,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b731c266-c32c-4fa6-b690-28ab4d4d68ed" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/json_diff.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/adsserver.log" beforeDir="false" afterPath="$PROJECT_DIR$/adsserver.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.hjson" beforeDir="false" afterPath="$PROJECT_DIR$/config.hjson" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/networking/client.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/networking/client.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/networking/codec/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/networking/codec/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/networking/codec/types.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/networking/codec/types.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/networking/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/networking/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/networking/types.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/networking/types.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/settings/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/settings/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/helper.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/helper.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ws.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/ws.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ws_ads.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/ws_ads.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xml_to_struct/helper.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/xml_to_struct/helper.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xml_to_struct/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/xml_to_struct/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xml_to_struct/types.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/xml_to_struct/types.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test2" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -35,41 +32,54 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
+    <splitter split-orientation="horizontal" split-proportion="0.8411594">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="json_diff.rs" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/json_diff.rs">
+          <file leaf-file-name="main.rs" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main.rs">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="298">
-                  <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
+                <state relative-caret-position="2499">
+                  <caret line="147" column="51" selection-start-line="147" selection-start-column="51" selection-end-line="147" selection-end-column="51" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="client.rs" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/networking/client.rs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="17">
+                  <caret line="165" column="34" selection-start-line="165" selection-start-column="34" selection-end-line="165" selection-end-column="34" />
+                  <folding>
+                    <element signature="e#2293#2294#0" expanded="true" />
+                    <element signature="e#2339#2340#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="helper.rs" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/xml_to_struct/helper.rs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="272">
+                  <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
                 </state>
               </provider>
             </entry>
           </file>
           <file leaf-file-name="mod.rs" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/settings/mod.rs">
+            <entry file="file://$PROJECT_DIR$/src/networking/codec/mod.rs">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="306">
-                  <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+                <state relative-caret-position="153">
+                  <caret line="9" column="9" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="types.rs" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/xml_to_struct/types.rs">
+          <file leaf-file-name="ws_ads.rs" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/ws_ads.rs">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="264">
-                  <caret line="181" column="28" selection-start-line="181" selection-start-column="28" selection-end-line="181" selection-end-column="28" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="main.rs" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main.rs">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="539">
-                  <caret line="125" column="26" selection-start-line="125" selection-start-column="26" selection-end-line="125" selection-end-column="26" />
+                <state relative-caret-position="1207">
+                  <caret line="71" column="24" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
                 </state>
               </provider>
             </entry>
@@ -77,17 +87,8 @@
           <file leaf-file-name="mod.rs" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/xml_to_struct/mod.rs">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="267">
-                  <caret line="59" column="13" selection-start-line="59" selection-start-column="13" selection-end-line="59" selection-end-column="13" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="types.rs" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/networking/types.rs">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2516">
-                  <caret line="148" column="15" selection-start-line="148" selection-start-column="15" selection-end-line="148" selection-end-column="15" />
+                <state relative-caret-position="1020">
+                  <caret line="60" column="10" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="10" />
                 </state>
               </provider>
             </entry>
@@ -95,8 +96,8 @@
           <file leaf-file-name="mod.rs" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/networking/mod.rs">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2006">
-                  <caret line="159" column="40" selection-start-line="159" selection-start-column="40" selection-end-line="159" selection-end-column="40" />
+                <state relative-caret-position="952">
+                  <caret line="58" column="50" selection-start-line="58" selection-start-column="50" selection-end-line="58" selection-end-column="50" />
                 </state>
               </provider>
             </entry>
@@ -104,17 +105,17 @@
           <file leaf-file-name="ws.rs" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/ws.rs">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="187">
-                  <caret line="11" selection-start-line="11" selection-end-line="11" />
+                <state relative-caret-position="2448">
+                  <caret line="146" column="48" selection-start-line="146" selection-start-column="48" selection-end-line="146" selection-end-column="48" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="map_deserialize.rs" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/settings/map_deserialize.rs">
+          <file leaf-file-name="types.rs" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/networking/codec/types.rs">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="17">
-                  <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
+                <state relative-caret-position="408">
+                  <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
                 </state>
               </provider>
             </entry>
@@ -122,7 +123,7 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="test" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/test">
               <provider selected="true" editor-type-id="text-editor">
@@ -136,7 +137,7 @@
             <entry file="file://$PROJECT_DIR$/config.hjson">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="391">
-                  <caret line="23" column="1" lean-forward="true" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
+                  <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
                 </state>
               </provider>
             </entry>
@@ -154,29 +155,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>net</find>
-      <find>search_index</find>
-      <find>Sender</find>
-      <find>config.plc</find>
-      <find>println</find>
-      <find>map</find>
-      <find>Map</find>
-      <find>AdsVer</find>
-      <find>sync:</find>
-      <find>Arc</find>
-      <find>number</find>
-      <find>AdsType</find>
-      <find>with_state</find>
-      <find>AdsVersion</find>
-      <find>HashMap</find>
-      <find>udiDataSize</find>
-      <find>name.</find>
-      <find>data</find>
-      <find>.Main</find>
-      <find>1029697D</find>
-      <find>file_exists</find>
-      <find>get_size_by_key</find>
-      <find>nom:</find>
       <find>!</find>
       <find>ToSoc</find>
       <find>ToPlc</find>
@@ -184,6 +162,29 @@
       <find>AmsCon</find>
       <find>Ams</find>
       <find>networking</find>
+      <find>AdsClientToWs</find>
+      <find>gen_request</find>
+      <find>read_req</find>
+      <find>gen_write</find>
+      <find>AdsClientCommand</find>
+      <find>R:</find>
+      <find>futr</find>
+      <find>futures::</find>
+      <find>DAata</find>
+      <find>WsToAdsClient</find>
+      <find>request_map</find>
+      <find>sync:</find>
+      <find>channel</find>
+      <find>data:</find>
+      <find>oneshot</find>
+      <find>Re</find>
+      <find>rx</find>
+      <find>mpsc::Se</find>
+      <find>Sender</find>
+      <find>re</find>
+      <find>Register</find>
+      <find>stopped</find>
+      <find>println!(&quot;</find>
     </findStrings>
     <replaceStrings>
       <replace>read_u32::&lt;LittleEndian&gt;()</replace>
@@ -216,10 +217,14 @@
         <option value="$PROJECT_DIR$/src/xml_to_struct/helper.rs" />
         <option value="$PROJECT_DIR$/src/settings/mod.rs" />
         <option value="$PROJECT_DIR$/src/networking/types.rs" />
-        <option value="$PROJECT_DIR$/src/ws.rs" />
         <option value="$PROJECT_DIR$/src/json_diff.rs" />
-        <option value="$PROJECT_DIR$/src/networking/mod.rs" />
         <option value="$PROJECT_DIR$/src/main.rs" />
+        <option value="$PROJECT_DIR$/src/networking/codec/mod.rs" />
+        <option value="$PROJECT_DIR$/src/ws.rs" />
+        <option value="$PROJECT_DIR$/src/networking/codec/types.rs" />
+        <option value="$PROJECT_DIR$/src/networking/mod.rs" />
+        <option value="$PROJECT_DIR$/src/ws_ads.rs" />
+        <option value="$PROJECT_DIR$/src/networking/client.rs" />
       </list>
     </option>
   </component>
@@ -258,6 +263,13 @@
               <item name="AdsServer" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="networking" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AdsServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AdsServer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="networking" type="462c0819:PsiDirectoryNode" />
+              <item name="codec" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="AdsServer" type="b2602c69:ProjectViewProjectNode" />
@@ -337,24 +349,25 @@
       <workItem from="1531465335267" duration="19193000" />
       <workItem from="1531748261569" duration="1003000" />
       <workItem from="1531751352401" duration="29075000" />
+      <workItem from="1532420546767" duration="20607000" />
+      <workItem from="1532502487528" duration="30000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79291000" />
+    <option name="totallyTimeSpent" value="99928000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.49208024" visible="true" weight="0.1015625" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.48996833" visible="true" weight="0.1015625" />
       <window_info anchor="bottom" id="TODO" order="10" />
       <window_info anchor="right" id="Cargo" order="0" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50065106" side_tool="true" weight="0.29001367" />
       <window_info anchor="bottom" id="GitLabIntegration" order="3" />
-      <window_info anchor="bottom" id="Find" order="5" weight="0.32946146" />
       <window_info anchor="bottom" id="Version Control" order="2" />
       <window_info anchor="bottom" id="Run" order="6" />
-      <window_info id="Structure" order="2" sideWeight="0.5079197" side_tool="true" weight="0.1015625" />
+      <window_info id="Structure" order="2" sideWeight="0.5100317" side_tool="true" visible="true" weight="0.1015625" />
       <window_info anchor="bottom" id="Terminal" order="0" sideWeight="0.49934897" weight="0.3379092" />
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
@@ -364,6 +377,7 @@
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="5" weight="0.32946146" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -374,52 +388,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/xml_to_struct/mod.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
-          <caret line="48" column="20" lean-forward="true" selection-start-line="48" selection-start-column="8" selection-end-line="48" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/networking/types.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.hjson">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/settings/map_deserialize.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xml_to_struct/types.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1734">
-          <caret line="102" column="26" selection-start-line="102" selection-start-column="26" selection-end-line="102" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Cargo.toml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -431,10 +403,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2516">
           <caret line="148" column="40" selection-start-line="148" selection-start-column="40" selection-end-line="148" selection-end-column="40" />
-          <folding>
-            <element signature="e#5442#5443#0" expanded="true" />
-            <element signature="e#5493#5494#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -445,13 +413,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/networking/types.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1632">
-          <caret line="96" column="14" selection-start-line="96" selection-start-column="14" selection-end-line="96" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/networking/types.rs" />
     <entry file="file://$PROJECT_DIR$/config.hjson">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -466,13 +428,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/xml_to_struct/types.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3332">
-          <caret line="196" column="69" selection-start-line="196" selection-start-column="62" selection-end-line="196" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/xml_to_struct/types.rs" />
     <entry file="file://$PROJECT_DIR$/src/settings/map_deserialize.rs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
@@ -501,13 +457,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/networking/types.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1632">
-          <caret line="96" column="14" selection-start-line="96" selection-start-column="14" selection-end-line="96" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/networking/types.rs" />
     <entry file="file://$PROJECT_DIR$/config.hjson">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -522,13 +472,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/xml_to_struct/types.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3332">
-          <caret line="196" column="69" selection-start-line="196" selection-start-column="62" selection-end-line="196" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/xml_to_struct/types.rs" />
     <entry file="file://$PROJECT_DIR$/src/settings/map_deserialize.rs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="578">
@@ -571,13 +515,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/networking/types.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1632">
-          <caret line="96" column="14" selection-start-line="96" selection-start-column="14" selection-end-line="96" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/networking/types.rs" />
     <entry file="file://$PROJECT_DIR$/config.hjson">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -592,13 +530,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/xml_to_struct/types.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3332">
-          <caret line="196" column="69" selection-start-line="196" selection-start-column="62" selection-end-line="196" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/xml_to_struct/types.rs" />
     <entry file="file://$PROJECT_DIR$/src/settings/map_deserialize.rs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="578">
@@ -634,13 +566,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/v14.tpy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
-          <caret line="16592" column="40" selection-start-line="16592" selection-start-column="30" selection-end-line="16592" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/v14.tpy" />
     <entry file="file://$PROJECT_DIR$/Cargo.toml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -669,27 +595,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/xml_to_struct/mod.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="59" column="13" selection-start-line="59" selection-start-column="13" selection-end-line="59" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xml_to_struct/helper.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="118" column="23" lean-forward="true" selection-start-line="118" selection-start-column="23" selection-end-line="118" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xml_to_struct/types.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="181" column="28" selection-start-line="181" selection-start-column="28" selection-end-line="181" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/xml_to_struct/types.rs" />
     <entry file="file://$PROJECT_DIR$/src/settings/mod.rs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -697,45 +603,99 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ws.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/json_diff.rs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
+        <state relative-caret-position="561">
+          <caret line="33" column="24" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.rs">
+    <entry file="file://$PROJECT_DIR$/src/networking/types.rs" />
+    <entry file="file://$PROJECT_DIR$/src/xml_to_struct/mod.rs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="539">
-          <caret line="125" column="26" selection-start-line="125" selection-start-column="26" selection-end-line="125" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/networking/mod.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2006">
-          <caret line="159" column="40" selection-start-line="159" selection-start-column="40" selection-end-line="159" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/networking/types.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2516">
-          <caret line="148" column="15" selection-start-line="148" selection-start-column="15" selection-end-line="148" selection-end-column="15" />
+        <state relative-caret-position="1020">
+          <caret line="60" column="10" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config.hjson">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
-          <caret line="23" column="1" lean-forward="true" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
+          <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ws.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2448">
+          <caret line="146" column="48" selection-start-line="146" selection-start-column="48" selection-end-line="146" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/actix-0.7.0/src/handler.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="52" column="10" selection-start-line="52" selection-start-column="10" selection-end-line="52" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/networking/codec/types.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/networking/codec/mod.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="9" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/xml_to_struct/helper.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/actix-0.7.0/src/io.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="658">
+          <caret line="378" column="24" selection-start-line="378" selection-start-column="20" selection-end-line="378" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2499">
+          <caret line="147" column="51" selection-start-line="147" selection-start-column="51" selection-end-line="147" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/networking/mod.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="952">
+          <caret line="58" column="50" selection-start-line="58" selection-start-column="50" selection-end-line="58" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ws_ads.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1207">
+          <caret line="71" column="24" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/networking/client.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="165" column="34" selection-start-line="165" selection-start-column="34" selection-end-line="165" selection-end-column="34" />
+          <folding>
+            <element signature="e#2293#2294#0" expanded="true" />
+            <element signature="e#2339#2340#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

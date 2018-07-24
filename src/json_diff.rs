@@ -1,5 +1,5 @@
 use nom::{self, types::CompleteStr as Input, IResult};
-use serde_json::Value;
+use serde_json::{Map, Value};
 
 #[derive(Debug)]
 pub enum Schema {
@@ -83,15 +83,16 @@ fn obj_parser(i: Input) -> IResult<Input, Schema> {
         }
     }
     let (i, value_v) = take!(i, n)?;
-    let (_, v) = value_parser(value_v)?;
+    let (_, v) = value_parser(Input(value_v.trim()))?;
     let (i, _) = tag!(i, "}")?;
     Ok((i, Schema::Root(v)))
 }
 
 #[inline(always)]
-pub fn schema_parser(i: &str) -> Result<Schema, nom::Err<Input>> {
-    let (_, v) = ws!(Input(i), obj_parser)?;
-    Ok(v)
+pub fn schema_parser(i: &str) -> Option<Schema> {
+    let s: String = i.chars().filter(|x| *x != ' ').collect();
+    let (_, v) = ws!(Input(&s), obj_parser).unwrap();
+    Some(v)
 }
 
 impl Schema {
@@ -117,15 +118,20 @@ impl Schema {
                     .collect(),
             )),
             Schema::Obj(k, c) => match v.get(k.trim()) {
-                Some(value) => Some(Value::Object(
-                    c.iter()
-                        .filter_map(|e| match e.as_schema(value) {
-                            Some(f) => Some((e, f)),
-                            None => None,
-                        })
-                        .map(|(e, f)| (e.to_string(), f))
-                        .collect(),
-                )),
+                Some(value) => Some(Value::Object({
+                    let v = Value::Object(
+                        c.iter()
+                            .filter_map(|e| match e.as_schema(value) {
+                                Some(f) => Some((e, f)),
+                                None => None,
+                            })
+                            .map(|(e, f)| (e.to_string(), f))
+                            .collect(),
+                    );
+                    let mut m = Map::new();
+                    m.insert(k.trim().to_string(), v);
+                    m
+                })),
                 None => unreachable!("None Object"),
             },
         }
@@ -157,5 +163,21 @@ pub fn merge(schema: Value, data: Value) -> Value {
         ),
         (Value::Number(_), Value::Number(n2)) => Value::Number(n2),
         _ => unreachable!(),
+    }
+}
+
+pub fn merge_values(value1: Vec<Value>) -> Value {
+    if value1.len() == 0 {
+        Value::Null
+    } else {
+        let mut data = Map::new();
+        for v in value1 {
+            if let Value::Object(map) = v {
+                for (k, v) in map.into_iter() {
+                    data.insert(k, v);
+                }
+            }
+        }
+        Value::Object(data)
     }
 }

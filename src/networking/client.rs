@@ -1,39 +1,74 @@
 use super::codec::{self, types::AdsCommand, AdsPacket, AmsTcpHeader};
+use actix::dev::{MessageResponse, ResponseChannel};
+use actix::fut::wrap_future;
 use actix::prelude::*;
 use byteorder::{ByteOrder, LittleEndian};
+use futures::oneshot;
+use futures::sync::{mpsc, oneshot};
+use futures::{Future, Poll, Stream};
 use rand::{self, Rng};
+use std::collections::HashMap;
 use std::fmt::Debug;
 use std::io;
+use std::marker::PhantomData;
 use std::time::Duration;
 use tokio_io::io::WriteHalf;
 use tokio_tcp::TcpStream;
 use ws::{Ws, WsToAdsClient};
+use ws_ads::AdsToWsMultiplexer;
 
-pub enum AdsClientToWs {
-    ReadResult(codec::AdsPacket),
-    WriteData(codec::AdsPacket),
+pub enum WsMultiplexerRegister {
+    Register(Addr<AdsToWsMultiplexer>),
+    Unregister,
 }
 
-impl Message for AdsClientToWs {
-    type Result = ();
+impl Message for WsMultiplexerRegister {
+    type Result = Option<mpsc::Receiver<codec::AdsWriteReq>>;
+}
+
+impl Handler<WsMultiplexerRegister> for AdsClient {
+    type Result = Option<mpsc::Receiver<codec::AdsWriteReq>>;
+
+    fn handle(&mut self, msg: WsMultiplexerRegister, _: &mut Self::Context) -> Self::Result {
+        match msg {
+            WsMultiplexerRegister::Register(a) => {
+                self.ws_ads = Some(a);
+                let (tx, rx) = mpsc::channel(1);
+                self.write_request_sender = Some(tx);
+                Some(rx)
+            }
+            WsMultiplexerRegister::Unregister => {
+                self.ws_ads = None;
+                None
+            }
+        }
+    }
 }
 
 pub struct AdsClient {
-    pub framed: actix::io::FramedWrite<WriteHalf<TcpStream>, codec::AdsClientCodec>,
-    pub source: [u8; 8],
-    pub target: [u8; 8],
+    framed: actix::io::FramedWrite<WriteHalf<TcpStream>, codec::AdsClientCodec>,
+    source: [u8; 8],
+    target: [u8; 8],
+    ws_ads: Option<Addr<AdsToWsMultiplexer>>,
+    request_map: HashMap<u32, oneshot::Sender<AmsTcpHeader<codec::AdsReadRes>>>,
+    write_request_sender: Option<mpsc::Sender<codec::AdsWriteReq>>,
 }
 
-#[derive(Debug)]
-pub enum AdsClientCommand {
-    ReadToBc(u32),
-    ReadRetain(u32),
-    WriteToBc(Vec<u8>),
-    WriteRetain(Vec<u8>),
-}
-
-impl Message for AdsClientCommand {
-    type Result = ();
+impl AdsClient {
+    pub fn new(
+        framed: actix::io::FramedWrite<WriteHalf<TcpStream>, codec::AdsClientCodec>,
+        source: [u8; 8],
+        target: [u8; 8],
+    ) -> Self {
+        AdsClient {
+            framed,
+            source,
+            target,
+            ws_ads: None,
+            request_map: HashMap::new(),
+            write_request_sender: None,
+        }
+    }
 }
 
 impl Actor for AdsClient {
@@ -41,30 +76,33 @@ impl Actor for AdsClient {
 
     fn started(&mut self, ctx: &mut Self::Context) {
         println!("ads_client started");
-        //self.hb(ctx);
     }
 
     fn stopped(&mut self, _: &mut Self::Context) {
-        println!("stopped");
+        println!("ads_client: stopped");
     }
 }
 
 impl AdsClient {
-    fn gen_request<T>(&self, command_id: u16, state_flags: u16, data: T) -> AmsTcpHeader<T>
+    fn gen_request<T>(&self, command_id: u16, state_flags: u16, data: T) -> (AmsTcpHeader<T>, u32)
     where
         T: AdsCommand,
     {
-        codec::AmsTcpHeader {
-            length: 32 + data.size() as u32,
-            header: codec::AmsHeader {
-                source: self.source,
-                target: self.target,
-                command_id,
-                inv_id: rand::thread_rng().gen(),
-                state_flags,
-                data,
+        let r = rand::thread_rng().gen();
+        (
+            codec::AmsTcpHeader {
+                length: 32 + data.size() as u32,
+                header: codec::AmsHeader {
+                    source: self.source,
+                    target: self.target,
+                    command_id,
+                    inv_id: r,
+                    state_flags,
+                    data,
+                },
             },
-        }
+            r,
+        )
     }
 
     fn gen_write_request(
@@ -72,7 +110,7 @@ impl AdsClient {
         index_group: u32,
         index_offset: u32,
         data: Vec<u8>,
-    ) -> AmsTcpHeader<codec::AdsWriteReq> {
+    ) -> (AmsTcpHeader<codec::AdsWriteReq>, u32) {
         self.gen_request(
             3,
             4,
@@ -90,7 +128,7 @@ impl AdsClient {
         index_group: u32,
         index_offset: u32,
         length: u32,
-    ) -> AmsTcpHeader<codec::AdsReadReq> {
+    ) -> (AmsTcpHeader<codec::AdsReadReq>, u32) {
         self.gen_request(
             2,
             4,
@@ -105,28 +143,26 @@ impl AdsClient {
 
 impl actix::io::WriteHandler<io::Error> for AdsClient {}
 
-/**/
-
-fn send_to_ws(v: &[Addr<Ws>], data: codec::AdsPacket) {
-    for a in v {
-        a.do_send(data.clone());
-    }
-}
-
 impl StreamHandler<codec::AdsPacket, io::Error> for AdsClient {
     fn handle(&mut self, msg: codec::AdsPacket, _: &mut Context<Self>) {
         use super::codec::AdsPacket::*;
-        match &msg {
+        match msg {
             ReadReq(r) => {
                 println!("read_req: {:?}", r);
-                //self.framed.write(codec::AdsPacket::ReadRes(r.gen_res()));
+                self.framed.write(codec::AdsPacket::ReadRes(r.gen_res()));
             }
             ReadRes(r) => {
-                println!("read_res: {:?}", r);
+                let rres = self.request_map.remove(&r.header.inv_id).unwrap();
+                let _ = rres.send(r);
+                //send_to_ws(&self.ws_ads, AdsClientToWs::ReadResult(r));
             }
             WriteReq(w) => {
                 self.framed.write(codec::AdsPacket::WriteRes(w.gen_res()));
+                if let Some(ref mut tx) = &mut self.write_request_sender {
+                    let _ = tx.try_send(w.header.data);
+                }
                 //println!("write_req: {:?}", w);
+                //send_to_ws(&self.ws_ads, AdsClientToWs::WriteData(w));
             }
             WriteRes(_w) => {}
         }
@@ -134,22 +170,56 @@ impl StreamHandler<codec::AdsPacket, io::Error> for AdsClient {
     }
 }
 
-impl<T: 'static> Handler<T> for AdsClient
+impl Handler<codec::AdsReadReq> for AdsClient {
+    type Result = Box<Future<Item = codec::AdsReadRes, Error = ()>>;
+
+    fn handle(
+        &mut self,
+        msg: codec::AdsReadReq,
+        _: &mut Self::Context,
+    ) -> Box<Future<Item = codec::AdsReadRes, Error = ()>> {
+        let (req, inv) = self.gen_request(2, 4, msg);
+        let (tx, rx) = oneshot();
+        self.request_map.insert(inv, tx);
+        self.framed.write(AdsPacket::ReadReq(req));
+        Box::new(rx.map_err(|_| println!("error")).map(|f| f.header.data))
+    }
+}
+
+impl Handler<codec::AdsWriteReq> for AdsClient {
+    type Result = ();
+
+    fn handle(&mut self, msg: codec::AdsWriteReq, _: &mut Self::Context) -> Self::Result {
+        let (req, _) = self.gen_request(3, 4, msg);
+        self.framed.write(AdsPacket::WriteReq(req));
+    }
+}
+
+/*impl<T: 'static> Handler<T> for AdsClient
 where
-    T: codec::AdsCommand + Message<Result = ()> + Debug,
+    T: codec::AdsCommand + Message<Result = ()> + Debug,cls
+
 {
     type Result = ();
 
     fn handle(&mut self, msg: T, _: &mut Self::Context) {
+        println!("wrong");
         use std::any::Any;
         let m = Box::new(msg) as Box<Any>;
         let d = match m.downcast::<codec::AdsReadReq>() {
-            Ok(rr) => AdsPacket::ReadReq(self.gen_request(2, 4, *rr)),
+            Ok(rr) => {
+                let (req, inv) = ;
+                AdsPacket::ReadReq(req)
+            }
             Err(m) => match m.downcast::<codec::AdsWriteReq>() {
-                Ok(wr) => AdsPacket::WriteReq(self.gen_request(3, 4, *wr)),
+                Ok(wr) => {
+                    let (req, inv) = self.gen_request(3, 4, *wr);
+                    AdsPacket::WriteReq(req)
+                }
                 _ => unreachable!(),
             },
         };
         self.framed.write(d);
     }
 }
+*/

@@ -15,7 +15,7 @@ pub enum AdsPacket {
 }
 
 impl Message for AdsPacket {
-    type Result = ();
+    type Result = AdsPacket;
 }
 
 pub struct AdsClientCodec;

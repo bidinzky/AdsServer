@@ -7,7 +7,9 @@ pub use self::client::AdsClient as Client;
 use std::process;
 
 use futures::{future, Future};
+use std::collections::HashMap;
 use std::net::ToSocketAddrs;
+use std::time::Duration;
 use tokio_codec::FramedRead;
 use tokio_io::AsyncRead;
 use tokio_tcp::TcpStream;
@@ -57,11 +59,11 @@ pub fn create_client<T: ToSocketAddrs>(
             future::ok(Client::create(move |ctx| {
                 let (r, w) = stream.split();
                 ctx.add_stream(FramedRead::new(r, codec::AdsClientCodec));
-                Client {
-                    framed: actix::io::FramedWrite::new(w, codec::AdsClientCodec, ctx),
-                    target,
+                Client::new(
+                    actix::io::FramedWrite::new(w, codec::AdsClientCodec, ctx),
                     source,
-                }
+                    target,
+                )
             }))
         })
         .map_err(|e| {

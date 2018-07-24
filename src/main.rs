@@ -22,7 +22,6 @@ extern crate fern;
 extern crate nom;
 extern crate actix_web;
 extern crate chashmap;
-extern crate indextree;
 extern crate num_traits;
 extern crate quickxml_to_serde;
 
@@ -122,7 +121,7 @@ fn main() {
             }
         })
         .collect();
-    /*let sender: chashmap::CHashMap<_, _> = config
+    let sender: chashmap::CHashMap<_, _> = config
         .plc
         .iter()
         .map(move |plc| {
@@ -169,5 +168,5 @@ fn main() {
         .unwrap()
         .start();
 
-    let _ = system.run();*/
+    let _ = system.run();
 }
