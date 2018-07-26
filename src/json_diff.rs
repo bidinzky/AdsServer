@@ -8,9 +8,11 @@ pub enum Schema {
     Root(Vec<Schema>),
 }
 
-/*impl<'a> ToOwned for Schema<'a> {
-    type Owned: 
-}*/
+#[derive(Debug)]
+pub enum Either {
+    Resolve(Schema),
+    Subscription(Schema),
+}
 
 impl ToString for Schema {
     fn to_string(&self) -> String {
@@ -88,11 +90,17 @@ fn obj_parser(i: Input) -> IResult<Input, Schema> {
     Ok((i, Schema::Root(v)))
 }
 
-#[inline(always)]
-pub fn schema_parser(i: &str) -> Option<Schema> {
-    let s: String = i.chars().filter(|x| *x != ' ').collect();
-    let (_, v) = ws!(Input(&s), obj_parser).unwrap();
-    Some(v)
+pub fn schema_parser(i: &str) -> Either {
+    let mut s: String = i.chars().filter(|x| *x != ' ').collect();
+    s.make_ascii_uppercase();
+    if s.starts_with("SUBSCRIPTION") {
+        let i = s.find('{').unwrap();
+        let (_, v) = ws!(Input(&s[i..]), obj_parser).unwrap();
+        Either::Subscription(v)
+    } else {
+        let (_, v) = ws!(Input(&s), obj_parser).unwrap();
+        Either::Resolve(v)
+    }
 }
 
 impl Schema {
@@ -166,14 +174,47 @@ pub fn merge(schema: Value, data: Value) -> Value {
     }
 }
 
+pub fn merge_schemas(value1: Schema, value2: Schema) -> Schema {
+    match (value1, value2) {
+        (Schema::Tag(_), Schema::Tag(s)) => Schema::Tag(s),
+        (Schema::Root(v1), Schema::Root(v2)) => Schema::Root(
+            v1.into_iter()
+                .zip(v2.into_iter())
+                .flat_map(|(v1, v2)| match (v1, v2) {
+                    (Schema::Tag(s1), Schema::Tag(s2)) => {
+                        if s1 == s2 {
+                            vec![Schema::Tag(s1)]
+                        } else {
+                            vec![Schema::Tag(s1), Schema::Tag(s2)]
+                        }
+                    }
+                    (v1, v2) => vec![merge_schemas(v1, v2)],
+                })
+                .collect(),
+        ),
+        (Schema::Obj(k1, v1), Schema::Obj(k2, v2)) => {
+            if k1 == k2 {
+                if let Schema::Root(d) = merge_schemas(Schema::Root(v1), Schema::Root(v2)) {
+                    Schema::Obj(k1, d)
+                } else {
+                    unimplemented!()
+                }
+            } else {
+                Schema::Root(vec![Schema::Obj(k1, v1), Schema::Obj(k2, v2)])
+            }
+        }
+        _ => unreachable!(),
+    }
+}
+
 pub fn merge_values(value1: Vec<Value>) -> Value {
-    if value1.len() == 0 {
+    if value1.is_empty() {
         Value::Null
     } else {
         let mut data = Map::new();
         for v in value1 {
             if let Value::Object(map) = v {
-                for (k, v) in map.into_iter() {
+                for (k, v) in map {
                     data.insert(k, v);
                 }
             }

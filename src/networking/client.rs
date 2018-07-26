@@ -1,20 +1,13 @@
 use super::codec::{self, types::AdsCommand, AdsPacket, AmsTcpHeader};
-use actix::dev::{MessageResponse, ResponseChannel};
-use actix::fut::wrap_future;
 use actix::prelude::*;
-use byteorder::{ByteOrder, LittleEndian};
 use futures::oneshot;
 use futures::sync::{mpsc, oneshot};
-use futures::{Future, Poll, Stream};
+use futures::Future;
 use rand::{self, Rng};
 use std::collections::HashMap;
-use std::fmt::Debug;
 use std::io;
-use std::marker::PhantomData;
-use std::time::Duration;
 use tokio_io::io::WriteHalf;
 use tokio_tcp::TcpStream;
-use ws::{Ws, WsToAdsClient};
 use ws_ads::AdsToWsMultiplexer;
 
 pub enum WsMultiplexerRegister {
@@ -74,7 +67,7 @@ impl AdsClient {
 impl Actor for AdsClient {
     type Context = Context<Self>;
 
-    fn started(&mut self, ctx: &mut Self::Context) {
+    fn started(&mut self, _: &mut Self::Context) {
         println!("ads_client started");
     }
 
@@ -105,7 +98,7 @@ impl AdsClient {
         )
     }
 
-    fn gen_write_request(
+    /*fn gen_write_request(
         &self,
         index_group: u32,
         index_offset: u32,
@@ -138,7 +131,7 @@ impl AdsClient {
                 length,
             },
         )
-    }
+    }*/
 }
 
 impl actix::io::WriteHandler<io::Error> for AdsClient {}

@@ -3,10 +3,8 @@ use actix::prelude::*;
 use byteorder::{ByteOrder, LittleEndian};
 use chashmap::CHashMap;
 use futures::{future, Future};
-use json_diff::{merge, merge_values, Schema};
-use networking::{
-    AdsPacket, AdsReadReq, AdsReadRes, AdsWriteReq, AmsTcpHeader, Client, WsMultiplexerRegister,
-};
+use json_diff::{merge, merge_schemas, merge_values, Schema};
+use networking::{AdsReadReq, AdsReadRes, AdsWriteReq, Client, WsMultiplexerRegister};
 use serde_json::{self, Value};
 use std::sync::Arc;
 use std::time::Duration;
@@ -62,6 +60,7 @@ impl AdsStructMap {
 }
 
 pub struct AdsToWsMultiplexer {
+    pub subscription_map: CHashMap<Addr<Ws>, Schema>,
     pub ws_clients: Vec<Addr<Ws>>,
     pub client: Addr<Client>,
     pub data: AdsMemory,
@@ -78,6 +77,7 @@ impl AdsToWsMultiplexer {
         struct_map: AdsStructMap,
     ) -> Self {
         AdsToWsMultiplexer {
+            subscription_map: CHashMap::new(),
             ws_clients: Vec::new(),
             client,
             data,
@@ -96,7 +96,7 @@ impl Actor for AdsToWsMultiplexer {
             .client
             .send(WsMultiplexerRegister::Register(ctx.address()))
             .map_err(|_| eprintln!("unknowen error"));
-        ctx.spawn(wrap_future(f).map(|i, a, ctx: &mut Context<Self>| {
+        ctx.spawn(wrap_future(f).map(|i, _, ctx: &mut Context<Self>| {
             if let Some(rx) = i {
                 ctx.add_stream(rx);
             }
@@ -122,7 +122,7 @@ impl StreamHandler<AdsWriteReq, ()> for AdsToWsMultiplexer {
                 &self.version.map,
             );
             let s = Arc::new(serde_json::to_string(&self.data.ST_ADS_FROM_BC.data).unwrap());
-            for c in self.ws_clients.iter() {
+            for c in &self.ws_clients {
                 c.do_send(AdsToWsClient(s.clone()))
             }
         }
@@ -159,7 +159,7 @@ impl Handler<HeartBeat> for AdsToWsMultiplexer {
 
 impl Handler<WsToAdsClient> for AdsToWsMultiplexer {
     type Result = Box<ActorFuture<Item = String, Error = (), Actor = Self>>;
-    fn handle(&mut self, msg: WsToAdsClient, ctx: &mut Self::Context) -> Self::Result {
+    fn handle(&mut self, msg: WsToAdsClient, _: &mut Self::Context) -> Self::Result {
         match msg {
             WsToAdsClient::Register(m) => {
                 if !self.ws_clients.contains(&m) {
@@ -216,10 +216,10 @@ impl Handler<WsToAdsClient> for AdsToWsMultiplexer {
                                 (
                                     future::ok(schema_value),
                                     handle_request(
-                                        client.clone(),
-                                        version.clone(),
-                                        sm.by_str(&name).clone(),
-                                        name,
+                                        &client.clone(),
+                                        &version.clone(),
+                                        sm.by_str(&name),
+                                        &name,
                                     ),
                                 )
                             })).map_err(|_| println!("error {} {}", file!(), line!())),
@@ -228,7 +228,7 @@ impl Handler<WsToAdsClient> for AdsToWsMultiplexer {
                                 item.into_iter()
                                     .map(|(schema_value, item)| {
                                         let name = get_name(&schema_value);
-                                        handle_future(item, actor, schema_value, &name)
+                                        handle_future(&item, actor, &schema_value, &name)
                                     })
                                     .collect(),
                             )).unwrap()
@@ -238,7 +238,17 @@ impl Handler<WsToAdsClient> for AdsToWsMultiplexer {
                     unreachable!()
                 }
             }
-            _ => Box::new(wrap_future(future::err(()))),
+            WsToAdsClient::Subscription(s, a) => {
+                self.subscription_map
+                    .alter(a, move |m: Option<Schema>| match m {
+                        Some(os) => {
+                            let n = merge_schemas(os, s);
+                            Some(n)
+                        }
+                        None => Some(s),
+                    });
+                Box::new(wrap_future(future::err(())))
+            }
         }
     }
 }
@@ -251,12 +261,12 @@ fn get_name(s: &Schema) -> String {
     }
 }
 fn handle_request(
-    client: Addr<Client>,
-    version: Arc<AdsVersion>,
-    symbol: Symbol,
-    name: String,
+    client: &Addr<Client>,
+    version: &AdsVersion,
+    symbol: &Symbol,
+    name: &str,
 ) -> impl Future<Item = AdsReadRes, Error = ()> {
-    if let Some(key_guard) = version.search_index.get(&name.trim().to_string()) {
+    if let Some(key_guard) = version.search_index.get(&name.to_string()) {
         let ty: &AdsType = &*version.map.get(&*key_guard).unwrap();
         println!("{:?}", symbol);
         client
@@ -272,13 +282,13 @@ fn handle_request(
     }
 }
 fn handle_future(
-    item: AdsReadRes,
+    item: &AdsReadRes,
     actor: &mut AdsToWsMultiplexer,
-    schema: Schema,
-    name: &String,
+    schema: &Schema,
+    name: &str,
 ) -> Value {
     use serde_json::Map;
-    if let Some(key) = actor.version.search_index.get(name) {
+    if let Some(key) = actor.version.search_index.get(&name.to_string()) {
         let data = actor.data.by_str_mut(name);
         let ty: &AdsType = &*actor.version.map.get(&*key).unwrap();
         data.vec[..item.data.len()].clone_from_slice(&item.data[..]);

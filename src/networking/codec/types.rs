@@ -1,11 +1,7 @@
-use actix::dev::{MessageResponse, ResponseChannel};
-use actix::{Actor, Message};
+use actix::Message;
 use byteorder::{LittleEndian, WriteBytesExt};
 use bytes::{Buf, IntoBuf};
-use futures::{Future, Poll};
 use std::io;
-use std::sync::mpsc::{Receiver, Sender};
-//use super::super::client::ReturnFuture;
 
 pub trait AdsCommand: IntoBuf + Clone {
     type Result: AdsCommand;

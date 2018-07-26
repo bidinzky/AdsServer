@@ -7,9 +7,7 @@ pub use self::client::AdsClient as Client;
 use std::process;
 
 use futures::{future, Future};
-use std::collections::HashMap;
 use std::net::ToSocketAddrs;
-use std::time::Duration;
 use tokio_codec::FramedRead;
 use tokio_io::AsyncRead;
 use tokio_tcp::TcpStream;

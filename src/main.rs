@@ -1,3 +1,5 @@
+#![cfg_attr(feature = "cargo-clippy", allow(print_literal))]
+
 extern crate actix;
 extern crate byteorder;
 extern crate bytes;
