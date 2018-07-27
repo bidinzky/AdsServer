@@ -1,16 +1,16 @@
 use actix::fut::{wrap_future, ActorFuture};
 use actix::prelude::*;
 use byteorder::{ByteOrder, LittleEndian};
-use chashmap::CHashMap;
 use futures::{future, Future};
 use json_diff::{merge, merge_schemas, merge_values, Schema};
 use networking::{AdsReadReq, AdsReadRes, AdsWriteReq, Client, WsMultiplexerRegister};
-use serde_json::{self, Value};
+use serde_json::{self, Value, to_string};
+use std::collections::HashMap;
 use std::sync::Arc;
 use std::time::Duration;
 use types::Symbol;
 use types::{AdsType, AdsVersion};
-use ws::{AdsToWsClient, Ws, WsToAdsClient};
+use ws::{Ws, WsToAdsClient, AdsToWsClient};
 
 struct HeartBeat;
 
@@ -19,21 +19,16 @@ impl Message for HeartBeat {
 }
 
 #[derive(Debug)]
-pub struct AdsMemoryValue {
-    pub data: Value,
-    pub vec: Vec<u8>,
-}
-
-#[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct AdsMemory {
-    pub ST_ADS_TO_BC: AdsMemoryValue,
-    pub ST_ADS_FROM_BC: AdsMemoryValue,
-    pub ST_RETAIN_DATA: AdsMemoryValue,
+    pub data: Value,
+    pub ST_ADS_TO_BC: Vec<u8>,
+    pub ST_ADS_FROM_BC: Vec<u8>,
+    pub ST_RETAIN_DATA: Vec<u8>,
 }
 
 impl AdsMemory {
-    pub fn by_str_mut(&mut self, s: &str) -> &mut AdsMemoryValue {
+    pub fn by_str_mut(&mut self, s: &str) -> &mut [u8] {
         match s.trim() {
             "ST_ADS_TO_BC" => &mut self.ST_ADS_TO_BC,
             "ST_ADS_FROM_BC" => &mut self.ST_ADS_FROM_BC,
@@ -60,7 +55,7 @@ impl AdsStructMap {
 }
 
 pub struct AdsToWsMultiplexer {
-    pub subscription_map: CHashMap<Addr<Ws>, Schema>,
+    pub subscription_map: HashMap<Addr<Ws>, Schema>,
     pub ws_clients: Vec<Addr<Ws>>,
     pub client: Addr<Client>,
     pub data: AdsMemory,
@@ -77,7 +72,7 @@ impl AdsToWsMultiplexer {
         struct_map: AdsStructMap,
     ) -> Self {
         AdsToWsMultiplexer {
-            subscription_map: CHashMap::new(),
+            subscription_map: HashMap::new(),
             ws_clients: Vec::new(),
             client,
             data,
@@ -103,7 +98,6 @@ impl Actor for AdsToWsMultiplexer {
         }));
         ctx.notify(HeartBeat);
     }
-
     fn stopped(&mut self, _: &mut Self::Context) {
         self.client.do_send(WsMultiplexerRegister::Unregister);
         println!("ads_client_mutliplexer stopped");
@@ -114,17 +108,13 @@ impl StreamHandler<AdsWriteReq, ()> for AdsToWsMultiplexer {
     fn handle(&mut self, item: AdsWriteReq, _: &mut Self::Context) {
         // SLAVE
         if let Some(key) = self.version.search_index.get(&"ST_ADS_FROM_BC".to_string()) {
-            self.data.ST_ADS_FROM_BC.vec[(item.index_offset as usize)..item.data.len()]
+            self.data.ST_ADS_FROM_BC[(item.index_offset as usize)..item.data.len()]
                 .clone_from_slice(&item.data[(item.index_offset as usize)..]);
-            let ty: &AdsType = &*self.version.map.get(&*key).unwrap();
-            self.data.ST_ADS_FROM_BC.data = ty.as_data_struct(
-                &mut self.data.ST_ADS_FROM_BC.vec.as_slice(),
-                &self.version.map,
-            );
-            let s = Arc::new(serde_json::to_string(&self.data.ST_ADS_FROM_BC.data).unwrap());
-            for c in &self.ws_clients {
-                c.do_send(AdsToWsClient(s.clone()))
-            }
+            let ty: &AdsType = &self.version.map.get(&*key).unwrap();
+            let new_data =
+                ty.as_data_struct(&mut self.data.ST_ADS_FROM_BC.as_slice(), &self.version.map);
+			handle_subscriptions(&self.subscription_map, &self.data.data, &new_data);
+			self.data.data["ST_ADS_FROM_BC"] = new_data;
         }
     }
 }
@@ -135,25 +125,24 @@ impl Handler<HeartBeat> for AdsToWsMultiplexer {
     fn handle(&mut self, _: HeartBeat, ctx: &mut Self::Context) -> Self::Result {
         let c = self.count;
         self.count += 1;
-        {
-            let d = &mut self.data.ST_ADS_TO_BC.vec[16..20];
-            LittleEndian::write_u32(d, c);
-        }
+        LittleEndian::write_u32(&mut self.data.ST_ADS_TO_BC[16..20], c);
         if let Some(key) = self.version.search_index.get(&"ST_ADS_TO_BC".to_string()) {
-            let ty: &AdsType = &*self.version.map.get(&*key).unwrap();
-            self.data.ST_ADS_TO_BC.data = ty.as_data_struct(
-                &mut self.data.ST_ADS_TO_BC.vec.as_slice(),
-                &self.version.map,
-            );
+            let ty: &AdsType = &self.version.map.get(&*key).unwrap();
+            let new_data =
+                ty.as_data_struct(&mut self.data.ST_ADS_TO_BC.as_slice(), &self.version.map);
+            handle_subscriptions(&self.subscription_map, &self.data.data["ST_ADS_TO_BC"], &new_data);
+			self.data.data["ST_ADS_TO_BC"] = new_data;
         }
         let wr = AdsWriteReq {
             index_group: self.struct_map.st_ads_to_bc.index_group,
             index_offset: self.struct_map.st_ads_to_bc.index_offset + 16,
             length: 4,
-            data: self.data.ST_ADS_TO_BC.vec[16..20].to_vec(),
+            data: self.data.ST_ADS_TO_BC[16..20].to_vec(),
         };
+
         self.client.do_send(wr);
         ctx.notify_later(HeartBeat, Duration::new(5, 0));
+        ()
     }
 }
 
@@ -175,9 +164,10 @@ impl Handler<WsToAdsClient> for AdsToWsMultiplexer {
             }
             WsToAdsClient::Mutation(mutation) => {
                 let version = &self.version;
-                let mut mem = &mut self.data;
+                let mem = &mut self.data;
                 let client = &self.client;
                 let struct_map = &self.struct_map;
+				let subscription_map = &self.subscription_map;
                 if let Value::Object(obj) = mutation {
                     let _: Vec<()> = obj
                         .into_iter()
@@ -185,17 +175,21 @@ impl Handler<WsToAdsClient> for AdsToWsMultiplexer {
                             let (k, data) = param;
                             if let Some(key_guard) = version.search_index.get(&k.trim().to_string())
                             {
-                                let ty: &AdsType = &*version.map.get(&*key_guard).unwrap();
-                                let m = mem.by_str_mut(k.trim());
-                                m.data = merge(m.data.clone(), data);
-                                let _ =
-                                    ty.to_writer(&m.data, &mut m.vec.as_mut_slice(), &version.map);
+                                let ty: &AdsType = &version.map.get(&*key_guard).unwrap();
+                                let data = merge(mem.data.get(k.trim()).unwrap().clone(), data);
+                                {
+                                    let mut m = mem.by_str_mut(k.trim());
+                                    let _ = ty.to_writer(&data, &mut m, &version.map);
+                                }
+								handle_subscriptions(subscription_map, &mem.data[k.trim()], &data);
+                                mem.data[k.trim()] = data;
                                 let sm = struct_map.by_str(k.trim());
+                                let m = mem.by_str_mut(k.trim());
                                 client.do_send(AdsWriteReq {
                                     index_group: sm.index_group,
                                     index_offset: sm.index_offset,
-                                    length: m.vec.len() as u32,
-                                    data: m.vec.clone(),
+                                    length: m.len() as u32,
+                                    data: m.to_vec(),
                                 });
                             }
                             None
@@ -238,15 +232,11 @@ impl Handler<WsToAdsClient> for AdsToWsMultiplexer {
                     unreachable!()
                 }
             }
-            WsToAdsClient::Subscription(s, a) => {
-                self.subscription_map
-                    .alter(a, move |m: Option<Schema>| match m {
-                        Some(os) => {
-                            let n = merge_schemas(os, s);
-                            Some(n)
-                        }
-                        None => Some(s),
-                    });
+            WsToAdsClient::Subscription(mut s, a) => {
+                let v = self.subscription_map.entry(a).or_insert(s.clone());
+                if v != &mut s {
+                    *v = merge_schemas(v.clone(), s)
+                }
                 Box::new(wrap_future(future::err(())))
             }
         }
@@ -267,8 +257,7 @@ fn handle_request(
     name: &str,
 ) -> impl Future<Item = AdsReadRes, Error = ()> {
     if let Some(key_guard) = version.search_index.get(&name.to_string()) {
-        let ty: &AdsType = &*version.map.get(&*key_guard).unwrap();
-        println!("{:?}", symbol);
+        let ty: &AdsType = &version.map.get(&*key_guard).unwrap();
         client
             .send(AdsReadReq {
                 index_group: symbol.index_group,
@@ -287,19 +276,55 @@ fn handle_future(
     schema: &Schema,
     name: &str,
 ) -> Value {
-    use serde_json::Map;
-    if let Some(key) = actor.version.search_index.get(&name.to_string()) {
-        let data = actor.data.by_str_mut(name);
-        let ty: &AdsType = &*actor.version.map.get(&*key).unwrap();
-        data.vec[..item.data.len()].clone_from_slice(&item.data[..]);
-        data.data = ty.as_data_struct(&mut data.vec.as_slice(), &actor.version.map);
-        let m = Value::Object({
-            let mut map = Map::new();
-            map.insert(name.to_string(), data.data.clone());
-            map
-        });
-        schema.as_schema(&m).unwrap()
+    let ndata = if let Some(key) = actor.version.search_index.get(&name.to_string()) {
+        let data: &mut [u8] = actor.data.by_str_mut(name);
+        let ty: &AdsType = &actor.version.map.get(&*key).unwrap();
+        data[..item.data.len()].clone_from_slice(&item.data[..]);
+        ty.as_data_struct(&mut &data[..], &actor.version.map)
     } else {
         unreachable!()
+    };    
+    handle_subscriptions(&actor.subscription_map,&actor.data.data[name], &ndata);
+	actor.data.data[name] = ndata;
+    schema.as_schema(&actor.data.data).unwrap()
+}
+fn handle_subscriptions(subscription_map: &HashMap<Addr<Ws>, Schema>,old_data: &Value, new_data: &Value) {
+    for (c, s) in subscription_map {
+        match s {
+            Schema::Root(v) => for value in v {
+                use std::fs::write;
+                println!("write");
+                let sv1 = value.as_schema(new_data).unwrap();
+				let sv2 = value.as_schema(old_data).unwrap();
+                println!("{:?} {:?}", sv1, sv2);
+				if sv1 != sv2 {
+                    if is_empty(&sv1) {
+                        c.do_send(AdsToWsClient(to_string(&sv1).unwrap()));
+                    }
+				}
+            },
+            _ => {}
+        }
+    }
+}
+
+fn is_empty(v: &Value) -> bool {
+    match v {
+        Value::Object(m) => {
+            if m.is_empty() {
+                true
+            }else{
+                let mut acc = false;
+                for (_,v) in m {
+                    acc = acc || is_empty(v);
+                    if !acc {
+                        break;
+                    }
+                }
+                acc
+            }
+        },
+        Value::Array(v) => v.is_empty(),
+        _ => false
     }
 }

@@ -1,3 +1,4 @@
+#![feature(nll)]
 #![cfg_attr(feature = "cargo-clippy", allow(print_literal))]
 
 extern crate actix;
@@ -54,12 +55,17 @@ fn index(info: HttpRequest<Arc<ws::WsState>>) -> impl Responder {
     serde_json::to_string_pretty(&*info.state().config())
 }
 
-fn init_st_ads_to_bc<T: ToString>(version: &types::AdsVersion, k: &T) -> ws_ads::AdsMemoryValue {
+fn init_st_ads_to_bc<T: ToString + serde_json::value::Index>(
+    version: &types::AdsVersion,
+    k: &T,
+    d: &mut serde_json::Value,
+) -> Vec<u8> {
     let key_guard: &String = &*version.search_index.get(&k.to_string()).unwrap();
     let value: &types::AdsType = &*version.map.get(&*key_guard).unwrap();
     let v = vec![0u8; value.len() as usize];
     let data = value.as_data_struct(&mut &v[..], &version.map);
-    ws_ads::AdsMemoryValue { data, vec: v }
+    d[k] = data;
+    v
 }
 
 fn main() {
@@ -141,10 +147,12 @@ fn main() {
                 st_ads_to_bc: version.symbols.get(&*mkey).unwrap().clone(),
                 st_retain_data: version.symbols.get(&*rkey).unwrap().clone(),
             };
+            let mut data = serde_json::Value::Object(serde_json::Map::new());
             let mem = ws_ads::AdsMemory {
-                ST_ADS_TO_BC: init_st_ads_to_bc(&version, &"ST_ADS_TO_BC"),
-                ST_ADS_FROM_BC: init_st_ads_to_bc(&version, &"ST_ADS_FROM_BC"),
-                ST_RETAIN_DATA: init_st_ads_to_bc(&version, &"ST_RETAIN_DATA"),
+                ST_ADS_TO_BC: init_st_ads_to_bc(&version, &"ST_ADS_TO_BC", &mut data),
+                ST_ADS_FROM_BC: init_st_ads_to_bc(&version, &"ST_ADS_FROM_BC", &mut data),
+                ST_RETAIN_DATA: init_st_ads_to_bc(&version, &"ST_RETAIN_DATA", &mut data),
+                data,
             };
             let conn = (plc.ams_net_id.clone(), plc.ams_port).as_plc_conn();
             let client_addr = networking::create_client(

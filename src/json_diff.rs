@@ -1,7 +1,7 @@
 use nom::{self, types::CompleteStr as Input, IResult};
 use serde_json::{Map, Value};
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum Schema {
     Tag(String),
     Obj(String, Vec<Schema>),
@@ -91,9 +91,8 @@ fn obj_parser(i: Input) -> IResult<Input, Schema> {
 }
 
 pub fn schema_parser(i: &str) -> Either {
-    let mut s: String = i.chars().filter(|x| *x != ' ').collect();
-    s.make_ascii_uppercase();
-    if s.starts_with("SUBSCRIPTION") {
+    let s: String = i.chars().filter(|x| *x != ' ').collect();
+    if s[..12].eq_ignore_ascii_case("SUBSCRIPTION") {
         let i = s.find('{').unwrap();
         let (_, v) = ws!(Input(&s[i..]), obj_parser).unwrap();
         Either::Subscription(v)
@@ -125,11 +124,11 @@ impl Schema {
                     })
                     .collect(),
             )),
-            Schema::Obj(k, c) => match v.get(k.trim()) {
-                Some(value) => Some(Value::Object({
+            Schema::Obj(k, c) => {
+                Some(Value::Object({
                     let v = Value::Object(
                         c.iter()
-                            .filter_map(|e| match e.as_schema(value) {
+                            .filter_map(|e| match e.as_schema(&v[k.trim()]) {
                                 Some(f) => Some((e, f)),
                                 None => None,
                             })
@@ -139,9 +138,8 @@ impl Schema {
                     let mut m = Map::new();
                     m.insert(k.trim().to_string(), v);
                     m
-                })),
-                None => unreachable!("None Object"),
-            },
+                }))
+            }
         }
     }
 }

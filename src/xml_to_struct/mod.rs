@@ -5,7 +5,9 @@ use quickxml_to_serde;
 use serde_json::Value;
 use settings::VersionSetting;
 use std::{
-    collections::HashMap, fs::File, io::{BufRead, BufReader},
+    collections::HashMap,
+    fs::File,
+    io::{BufRead, BufReader},
 };
 
 use self::helper::build_dependencies;

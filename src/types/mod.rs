@@ -275,7 +275,7 @@ impl AdsType {
                     bit_size,
                 }),
                 obj if obj.contains_key("ArrayInfo") => {
-                    let mut array_info = match obj.get("ArrayInfo") {
+                    let array_info = match obj.get("ArrayInfo") {
                         Some(Value::Object(ref o)) => {
                             let t: Value = (o.clone()).into();
                             vec![t]

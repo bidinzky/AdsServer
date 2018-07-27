@@ -21,7 +21,7 @@ pub enum WsToAdsClient {
     Subscription(Schema, Addr<Ws>),
 }
 
-pub struct AdsToWsClient(pub Arc<String>);
+pub struct AdsToWsClient(pub String);
 
 impl Message for AdsToWsClient {
     type Result = ();

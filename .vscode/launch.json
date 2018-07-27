@@ -8,6 +8,7 @@
 			"name": "(Windows) Launch",
 			"type": "cppvsdbg",
 			"request": "launch",
+			"symbolSearchPath": "srv*DownstreamStore*https://msdl.microsoft.com/download/symbols",
 			"program": "${workspaceFolder}/target/debug/ads_server.exe",
 			"args": [],
 			"stopAtEntry": false,
