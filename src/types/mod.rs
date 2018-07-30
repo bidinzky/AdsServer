@@ -127,7 +127,13 @@ impl AdsPlcType {
             }
             AdsPlcType::String(ref len) => {
                 let strs = data.as_str().expect("no str").as_bytes();
-                let _ = w.write_all(&strs[..*len]);
+                if *len > strs.len() {
+                    let _ = w.write_all(&strs[..]);
+                    let _ = w.write_all(&vec![0u8; *len - strs.len()]);
+                //println!("{:?}", w);
+                } else {
+                    let _ = w.write_all(&strs[..*len]);
+                }
                 w.write_u8(0)
             }
             AdsPlcType::Other { ref reference, .. } => map
@@ -156,7 +162,7 @@ impl AdsPlcType {
             AdsPlcType::TOD => read_ads_number::<u32, R>(r, &None),
             AdsPlcType::Time => read_ads_number::<u32, R>(r, &None),
             AdsPlcType::String(ref len) => {
-                let mut b = vec![0u8; *len];
+                let mut b = vec![0u8; *len + 1];
                 let _ = r.read_exact(&mut b);
                 let i = b.iter().position(|&x| x == 0).unwrap_or(*len);
                 if i > 0 {

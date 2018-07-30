@@ -124,22 +124,20 @@ impl Schema {
                     })
                     .collect(),
             )),
-            Schema::Obj(k, c) => {
-                Some(Value::Object({
-                    let v = Value::Object(
-                        c.iter()
-                            .filter_map(|e| match e.as_schema(&v[k.trim()]) {
-                                Some(f) => Some((e, f)),
-                                None => None,
-                            })
-                            .map(|(e, f)| (e.to_string(), f))
-                            .collect(),
-                    );
-                    let mut m = Map::new();
-                    m.insert(k.trim().to_string(), v);
-                    m
-                }))
-            }
+            Schema::Obj(k, c) => Some(Value::Object({
+                let v = Value::Object(
+                    c.iter()
+                        .filter_map(|e| match e.as_schema(&v[k.trim()]) {
+                            Some(f) => Some((e, f)),
+                            None => None,
+                        })
+                        .map(|(e, f)| (e.to_string(), f))
+                        .collect(),
+                );
+                let mut m = Map::new();
+                m.insert(k.trim().to_string(), v);
+                m
+            })),
         }
     }
 }
